@@ -81,3 +81,30 @@ Then flash to the micro controller:
 avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyUSB0 -b 115200 -U flash:w:project.hex
 ```
 
+Sometimes the device can be at other bus locations including ttyACM* the correct location can be found using:
+
+'''
+ls -l /dev/ttyUSB* /dev/ttyACM*
+'''
+
+## Monitoring the Serial Port
+
+To monitor the serial port on linux use screen this requires some setup:
+
+Ensure screen is installed using:
+
+```
+sudo apt install screen
+```
+
+Then add the user to the dialout group using:
+
+```
+sudo usermod -a -G dialout $USER
+```
+
+Then launch screen using:
+
+```
+screen [DEVICE NAME] [BAUDRATE]
+```
