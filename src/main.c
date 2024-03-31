@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include <util/delay.h>
 
@@ -102,19 +103,20 @@ int main (void) {
     while (1) {
         print_prompt();
 
-        const uint16_t c_maxInputSize = 20;
+        uint16_t c_maxInputSize = 64;
         char p_input[c_maxInputSize];
+
+        _delay_ms(100);
 
         uint16_t inputSize = UART_getLine(p_input, c_maxInputSize);
 
-        UART_puts(p_input);
-        // UART_putc('\n');
+        _delay_ms(100);
 
-        const uint16_t c_maxCMDLength = 10;
-        const uint16_t c_maxArgsLength = 10;
+        uint16_t c_maxCMDLength = 64;
+        uint16_t c_maxArgsLength = 50;
 
-        char p_cmd[c_maxCMDLength];
-        char p_args[c_maxArgsLength];
+        char* p_cmd = calloc(c_maxCMDLength, sizeof(char));
+        char* p_args = calloc(c_maxArgsLength, sizeof(char));
 
         extract_cmd(p_input, inputSize, p_cmd, c_maxCMDLength, p_args, c_maxArgsLength);
 
@@ -127,6 +129,9 @@ int main (void) {
             // input is an error
             print_error(p_cmd);
         }
+
+        free(p_cmd);
+        free(p_args);
     }
 
 }

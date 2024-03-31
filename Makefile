@@ -46,4 +46,4 @@ flash: main.out
 # Launch a serial prompt
 .PHONY: serial
 serial: 
-	putty -serial $(USBDEVICE) 9600
+	putty -serial $(USBDEVICE) -sercfg 8,'1',9600,'n' -fn "Monospace 13"

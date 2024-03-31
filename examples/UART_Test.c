@@ -15,8 +15,6 @@
 
 #define F_CPU 16000000UL
 
-
-
 #define MS_DELAY 200
 
 

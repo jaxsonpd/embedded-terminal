@@ -4,6 +4,8 @@
  * @date 2024-03-30
  * @brief A file to test the uart interface on the avr microcontrollers
  * 
+ * This serial driver will replace all \n with \r to ensure mobility
+ * 
  * @cite http://www.rjhcoding.com/avrc-uart.php
  */
 
@@ -65,6 +67,11 @@ uint16_t UART_getLine(char* p_buffer, uint16_t bufferLength) {
 
         p_buffer[bufIdx++] = c;
     } while ((bufIdx < bufferLength) && (c != '\r') && (c != '\n'));
+
+    // Ensure that line terminations are correct
+    if (c == '\n') {
+        p_buffer[bufIdx-1] = '\r';
+    }
 
     p_buffer[bufIdx] = '\0';
 
