@@ -18,6 +18,23 @@
 
 #define BAUD_RATE 9600
 
+uint8_t HELP_entry(char* args) {
+    UART_puts("Embedded Terminal version 0.1\n");
+    UART_puts("The following commands are available for the system:\n\n");
+    UART_puts("help: print this message\n");
+
+    return 0;
+}
+
+
+const CMD_t help = {
+    .name = "help",
+    .command = HELP_entry
+};
+
+CMDs_t g_commands; 
+
+
 /** 
  * @brief Print a prompt to the screen
  * 
@@ -53,6 +70,9 @@ bool setup (void) {
     UART_init(BAUD_RATE);
 
     print_welcome();
+
+    g_commands.commands[0] = help;
+    g_commands.length = 1;
     return 1;
 } 
 
@@ -71,31 +91,31 @@ int main (void) {
         print_prompt();
 
         uint16_t c_maxInputSize = 64;
-        char p_input[c_maxInputSize];
+        char input[c_maxInputSize];
 
 
-        uint16_t inputSize = UART_getLineWithEcho(p_input, c_maxInputSize);
+        uint16_t inputSize = UART_getLineWithEcho(input, c_maxInputSize);
 
         uint16_t c_maxCMDLength = 64;
         uint16_t c_maxArgsLength = 64;
 
-        char* p_cmd = (char *)calloc(c_maxCMDLength, sizeof(char));
-        char* p_args = (char *)calloc(c_maxArgsLength, sizeof(char));
+        char* cmd = (char *)calloc(c_maxCMDLength, sizeof(char));
+        char* args = (char *)calloc(c_maxArgsLength, sizeof(char));
 
-        CMD_extract(p_input, inputSize, p_cmd, c_maxCMDLength, p_args, c_maxArgsLength);
+        CMD_extract(input, inputSize, cmd, c_maxCMDLength, args, c_maxArgsLength);
 
         if (inputSize == 1) {
             // Not a command so do not throw an error
-        } else if (CMD_checkInput(p_cmd)) {
+        } else if (CMD_checkInput(cmd)) {
             // input is a valid command
-            CMD_execute(p_cmd, p_args);
+            CMD_execute(g_commands, cmd, args);
         } else {
             // input is an error
-            CMD_printError(p_cmd);
+            CMD_printError(cmd);
         }
 
-        free(p_cmd);
-        free(p_args);
+        free(cmd);
+        free(args);
     }
 
 }

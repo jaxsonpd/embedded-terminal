@@ -8,17 +8,18 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "command.h"
 #include "UART.h"
 
 
-void CMD_execute(char* p_cmd, char* p_args) {
-    UART_puts("Excuted: ");
-    UART_puts(p_cmd);
-    UART_puts(" With args: ");
-    UART_puts(p_args);
-    UART_puts("\n");
+void CMD_execute(CMDs_t commands, char* cmd, char* args) {
+    for (uint8_t i=0; i < commands.length; i++) {
+        if (strcmp(commands.commands[i].name, cmd)) {
+            commands.commands[i].command(args);
+        }
+    }
 }
 
 

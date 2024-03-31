@@ -14,11 +14,43 @@
 #include <stdbool.h>
 
 /** 
- * @brief excute the command with the give arguments
- * @param p_cmd a pointer to the command string
- * @param p_args a pointer to the arguments string
+ * @struct CMD_t
+ *  A structure used for storing a command
+ * 
+ * @var CMD_t::name
+ *  The name of the command
+ * @var CMD_t::command
+ *  A pointer to the entry function for the command
+ * 
  */
-void CMD_execute(char* p_cmd, char* p_args);
+typedef struct {
+    char* name; 
+    uint8_t (*command)(char*); 
+} CMD_t;
+
+
+/** 
+ * @struct CMDs_t
+ *  A structure used for storing a array of commands 
+ * 
+ * @var CMD_t::commands
+ *  The array of commands
+ * @var CMD_t::length
+ *  The number of commands
+ * 
+ */
+typedef struct {
+    CMD_t* commands;
+    uint8_t length;
+} CMDs_t;
+
+/** 
+ * @brief excute the command with the give arguments
+ * @param commands an array of commands that are available
+ * @param cmd a pointer to the command string
+ * @param args a pointer to the arguments string
+ */
+void CMD_execute(CMDs_t commands, char* cmd, char* args);
 
 
 /** 
