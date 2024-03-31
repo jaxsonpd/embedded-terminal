@@ -26,7 +26,10 @@ main.o: $(SRCDIR)/main.c $(INCDIR)/UART.h
 UART.o: $(INCDIR)/UART.c $(INCDIR)/UART.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-main.out: main.o UART.o
+command.o: $(INCDIR)/command.c $(INCDIR)/command.c $(INCDIR)/UART.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+main.out: main.o UART.o command.o
 	$(CC) -mmcu=atmega328p $^ -o $@
 
 

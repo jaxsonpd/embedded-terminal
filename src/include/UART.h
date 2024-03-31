@@ -35,6 +35,12 @@ void UART_putc (unsigned char data);
  */
 void UART_puts(char* s);
 
+/** 
+ * @brief print a uint8_t in hex format
+ * @param val the value to print
+ * 
+ */
+void UART_puthex8(uint8_t val);
 
 /** 
  * @brief Recive a char from the uart buffer
@@ -53,4 +59,13 @@ unsigned char UART_getc(void);
  */
 uint16_t UART_getLine(char* p_buffer, uint16_t bufferLength);
 
+
+/** 
+ * @brief Get a whole line from the uart buffer and echo each char as it is recived
+ * @param p_buffer a pointer to a char array where the string will be stored
+ * @param bufferLength the length of the buffer
+ * 
+ * @return the resulting length of the line
+ */
+uint16_t UART_getLineWithEcho(char* p_buffer, uint16_t bufferLength);
 #endif // UART_H

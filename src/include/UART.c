@@ -4,7 +4,7 @@
  * @date 2024-03-30
  * @brief A file to test the uart interface on the avr microcontrollers
  * 
- * This serial driver will replace all \n with \r to ensure mobility
+ * This serial driver will always replace \r with \n in any incoming serial message
  * 
  * @cite http://www.rjhcoding.com/avrc-uart.php
  */
@@ -47,6 +47,20 @@ void UART_puts(char* s) {
     }
 }
 
+void UART_puthex8(uint8_t val) {
+    // extract hex values
+    uint8_t upperNibble = (val & 0xF0) >> 4;
+    uint8_t lowerNibble = val & 0x0F;
+
+    // convert to ascii
+    upperNibble += upperNibble > 9 ? 'A' - 10 : '0';
+    lowerNibble += lowerNibble > 9 ? 'A' - 10 : '0';
+
+    UART_putc(upperNibble);
+    UART_putc(lowerNibble);
+}
+
+
 
 unsigned char UART_getc(void) {
     // Wait until buffer is full
@@ -69,8 +83,35 @@ uint16_t UART_getLine(char* p_buffer, uint16_t bufferLength) {
     } while ((bufIdx < bufferLength) && (c != '\r') && (c != '\n'));
 
     // Ensure that line terminations are correct
-    if (c == '\n') {
-        p_buffer[bufIdx-1] = '\r';
+    if (c == '\r') {
+        p_buffer[bufIdx-1] = '\n';
+    }
+
+    p_buffer[bufIdx] = '\0';
+
+    return bufIdx; 
+}
+
+uint16_t UART_getLineWithEcho(char* p_buffer, uint16_t bufferLength) {
+    uint16_t bufIdx = 0;
+    char c;
+
+    // add to the buffer until run out of room or EOL is recived
+    do {
+        c = UART_getc();
+
+        if (c == '\r') {
+            UART_putc('\n');
+        } else {
+            UART_putc(c);
+        }
+
+        p_buffer[bufIdx++] = c;
+    } while ((bufIdx < bufferLength) && (c != '\r') && (c != '\n'));
+
+    // Ensure that line terminations are correct
+    if (c == '\r') {
+        p_buffer[bufIdx-1] = '\n';
     }
 
     p_buffer[bufIdx] = '\0';
