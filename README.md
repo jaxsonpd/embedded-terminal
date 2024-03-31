@@ -5,14 +5,13 @@ This is a terminal designed to run on the avr series of micro controller which o
 # Documentation
 ## Commands
 
+`help`: View the available commands and get general information about the system.
+
 # Setup
 
 A full installation and setup process can be found in SETUP.md
 
 ## Monitoring the Serial Port
-
-To monitor the serial port on linux use screen this requires some setup:
-
 ### Serial monitor settings
 
 | Setting | Value |
@@ -23,6 +22,13 @@ To monitor the serial port on linux use screen this requires some setup:
 | Encoding | `8n1` |
 
 ### Installation
+The author recommends using putty which can be installed using:
+```
+sudo apt install putty
+```
+
+To monitor the serial port on linux terminal use screen this requires some setup:
+
 Ensure screen is installed using:
 
 ```
@@ -39,10 +45,4 @@ Then launch screen using:
 
 ```
 screen [DEVICE NAME] [BAUDRATE]
-```
-
-Or use putty:
-
-```
-sudo apt install putty
 ```
