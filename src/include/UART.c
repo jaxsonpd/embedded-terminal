@@ -12,22 +12,11 @@
 #include <stdint.h>
 #include <util/delay.h>
 
+#include "UART.h"
 
 #define F_CPU 16000000UL
 
 
-
-#define MS_DELAY 200
-
-
-/** 
- * @brief Initalise the UART interface to the give baud rate
- * 
- * uBRRn = f_osc/(16 * baud)-1
- * 
- * @param ubrr the baud rate of the serial transmistions already divided by the clock
- * 
- */
 void UART_init (uint16_t baud) {
     // initalise the baudrate
     unsigned long ubrr = (((F_CPU) + 8UL * (baud)) / (16UL * (baud))) - 1UL;
@@ -40,11 +29,6 @@ void UART_init (uint16_t baud) {
 }
 
 
-/** 
- * @brief put a char to the serial buffer
- * @param data a char to put to the serial buffer
- * 
- */
 void UART_putc (unsigned char data) {
     // wait for transmit buffer to be empty
     while(!(UCSR0A & (1 << UDRE0)));
@@ -54,11 +38,6 @@ void UART_putc (unsigned char data) {
 }
 
 
-/** 
- * @brief Print a string to uart
- * @param s the string to print
- * 
- */
 void UART_puts(char* s) {
     // Transmit until null is reached
     while (*s > 0) {
@@ -67,11 +46,6 @@ void UART_puts(char* s) {
 }
 
 
-/** 
- * @brief Recive a char from the uart buffer
- * 
- * @return the char recived
- */
 unsigned char UART_getc(void) {
     // Wait until buffer is full
     while(!(UCSR0A & (1 << RXC0)));
@@ -81,13 +55,6 @@ unsigned char UART_getc(void) {
 }
 
 
-/** 
- * @brief Get a whole line from the uart buffer 
- * @param p_buffer a pointer to a char array where the string will be stored
- * @param bufferLength the length of the buffer
- * 
- * @return the resulting length of the line
- */
 uint16_t UART_getLine(char* p_buffer, uint16_t bufferLength) {
     uint16_t bufIdx = 0;
     char c;
@@ -103,23 +70,3 @@ uint16_t UART_getLine(char* p_buffer, uint16_t bufferLength) {
 
     return bufIdx; 
 }
-
-
-
-int main (void) {
-    UART_init(9600);
-    UART_puts("Hello World \n");
-
-    while (1) {
-        uint16_t bufferSize = 20;
-        char p_buffer[bufferSize];
-
-        uint16_t result = UART_getLine(p_buffer, bufferSize);
-
-        UART_puts(p_buffer);
-    }
-}
-
-
-
-
