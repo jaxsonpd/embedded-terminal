@@ -14,17 +14,29 @@
 #include "UART.h"
 
 
-void CMD_execute(CMDs_t commands, char* cmd, char* args) {
+void CMD_execute(CMDs_t commands, char *cmd, char *args) {
     for (uint8_t i=0; i < commands.length; i++) {
-        if (strcmp(commands.commands[i].name, cmd)) {
-            commands.commands[i].command(args);
+        UART_putc('\n');
+        UART_puts("Checked: ");
+        UART_puts(commands.list[i].name);
+        UART_putc('\n');
+
+        UART_puthex8(strcmp(commands.list[i].name, cmd));
+        
+        if (strcmp(commands.list[i].name, cmd) == 0) {
+            commands.list[i].command(args);
         }
     }
+    
+    UART_putc('\n');
+    UART_puts("Excuted: ");
+    UART_puts(cmd);
+    UART_putc('\n');
 }
 
 
-void CMD_extract(char* p_input, uint16_t inputSize, char* p_cmd, uint16_t maxCMDLength, 
-                char* p_args, uint16_t maxArgsLength) {
+void CMD_extract(char *p_input, uint16_t inputSize, char *p_cmd, uint16_t maxCMDLength, 
+                char *p_args, uint16_t maxArgsLength) {
     char c = 0;
     uint16_t cmdIndex = 0;
     uint16_t argsIndex = 0;
@@ -59,12 +71,12 @@ void CMD_extract(char* p_input, uint16_t inputSize, char* p_cmd, uint16_t maxCMD
 }
 
 
-bool CMD_checkInput(char* cmd) {
+bool CMD_checkInput(char *cmd) {
 
     return 1;
 }
 
-void CMD_printError(char* p_cmd) {
+void CMD_printError(char *p_cmd) {
     UART_puts(p_cmd);
     UART_puts(" is not a valid cmd please try again \n \n");
 }

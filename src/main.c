@@ -18,6 +18,7 @@
 
 #define BAUD_RATE 9600
 
+
 uint8_t HELP_entry(char* args) {
     UART_puts("Embedded Terminal version 0.1\n");
     UART_puts("The following commands are available for the system:\n\n");
@@ -27,10 +28,7 @@ uint8_t HELP_entry(char* args) {
 }
 
 
-const CMD_t help = {
-    .name = "help",
-    .command = HELP_entry
-};
+CMD_t help;
 
 CMDs_t g_commands; 
 
@@ -43,6 +41,7 @@ void print_prompt (void) {
     char p_prompt[3] = "$>";
     UART_puts(p_prompt);
 }
+
 
 /** 
  * @brief Print the welcome screen
@@ -71,21 +70,24 @@ bool setup (void) {
 
     print_welcome();
 
-    g_commands.commands[0] = help;
+    help.name = calloc(5, sizeof(char));
+    strcpy(help.name, "help");
+
+    UART_puts(help.name);
+
+    help.command = HELP_entry;
+
+    g_commands.list = calloc(1, sizeof(CMD_t));
+    g_commands.list[0] = help;
     g_commands.length = 1;
-    return 1;
+
+    return true;
 } 
 
 
 int main (void) {
     // Setup
-    if (!setup()) {
-        while (1) {
-            UART_puts("Setup Fault");
-
-            _delay_ms(1000);            
-        }
-    }
+    setup();
 
     while (1) {
         print_prompt();

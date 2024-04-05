@@ -7,15 +7,15 @@ This file explains how to setup the project to be run on both linux and wsl.
 Ensure the system is up to date:
 
 ```
->$ sudo apt-get update
->$ sudo apt-get upgrade -y
+sudo apt-get update
+sudo apt-get upgrade -y
 ```
 
 Then install avr and avr-dude:
 
 ```
->$ sudo apt-get install gcc-avr binutils-avr avr-libc
->$ sudo apt-get install avrdude
+sudo apt-get install gcc-avr binutils-avr avr-libc
+sudo apt-get install avrdude
 ```
 
 ## USB passthrough for WSL

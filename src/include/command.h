@@ -24,8 +24,8 @@
  * 
  */
 typedef struct {
-    char* name; 
-    uint8_t (*command)(char*); 
+    char *name; 
+    uint8_t (*command)(char *); 
 } CMD_t;
 
 
@@ -33,14 +33,14 @@ typedef struct {
  * @struct CMDs_t
  *  A structure used for storing a array of commands 
  * 
- * @var CMD_t::commands
+ * @var CMD_t::list
  *  The array of commands
  * @var CMD_t::length
  *  The number of commands
  * 
  */
 typedef struct {
-    CMD_t* commands;
+    CMD_t *list;
     uint8_t length;
 } CMDs_t;
 
@@ -50,7 +50,7 @@ typedef struct {
  * @param cmd a pointer to the command string
  * @param args a pointer to the arguments string
  */
-void CMD_execute(CMDs_t commands, char* cmd, char* args);
+void CMD_execute(CMDs_t commands, char *cmd, char *args);
 
 
 /** 
@@ -63,8 +63,8 @@ void CMD_execute(CMDs_t commands, char* cmd, char* args);
  * @param maxArgsLength the size of the args string
  * 
  */
-void CMD_extract(char* p_input, uint16_t inputSize, char* p_cmd, uint16_t maxCMDLength,
-                char* p_args, uint16_t maxArgsLength);
+void CMD_extract(char *p_input, uint16_t inputSize, char *p_cmd, uint16_t maxCMDLength,
+                char *p_args, uint16_t maxArgsLength);
 
 
 /** 
@@ -73,7 +73,7 @@ void CMD_extract(char* p_input, uint16_t inputSize, char* p_cmd, uint16_t maxCMD
  * 
  * @return 1 if excutable 0 otherwise
  */
-bool CMD_checkInput(char* cmd);
+bool CMD_checkInput(char *cmd);
 
 
 /** 
@@ -81,6 +81,6 @@ bool CMD_checkInput(char* cmd);
  * @param p_cmd the command that is not excutable
  * 
  */
-void CMD_printError(char* p_cmd);
+void CMD_printError(char *p_cmd);
 
 #endif // COMMAND_H
