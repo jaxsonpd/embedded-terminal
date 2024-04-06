@@ -13,25 +13,12 @@
 #include <util/delay.h>
 
 #include "include/UART.h"
-#include "include/command.h"
+#include "command.h"
 
 
 #define BAUD_RATE 9600
 
-
-uint8_t HELP_entry(char* args) {
-    UART_puts("Embedded Terminal version 0.1\n");
-    UART_puts("The following commands are available for the system:\n\n");
-    UART_puts("help: print this message\n");
-
-    return 0;
-}
-
-
-CMD_t help;
-
-CMDs_t g_commands; 
-
+CMDs_t *p_commands;
 
 /** 
  * @brief Print a prompt to the screen
@@ -70,16 +57,7 @@ bool setup (void) {
 
     print_welcome();
 
-    help.name = calloc(5, sizeof(char));
-    strcpy(help.name, "help");
-
-    UART_puts(help.name);
-
-    help.command = HELP_entry;
-
-    g_commands.list = calloc(1, sizeof(CMD_t));
-    g_commands.list[0] = help;
-    g_commands.length = 1;
+    p_commands = CMD_setup();
 
     return true;
 } 
@@ -110,7 +88,7 @@ int main (void) {
             // Not a command so do not throw an error
         } else if (CMD_checkInput(cmd)) {
             // input is a valid command
-            CMD_execute(g_commands, cmd, args);
+            CMD_execute(*p_commands, cmd, args);
         } else {
             // input is an error
             CMD_printError(cmd);

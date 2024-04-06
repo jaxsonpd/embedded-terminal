@@ -9,29 +9,59 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
+
+#include "include/UART.h"
+
+#include "help.h"
 
 #include "command.h"
-#include "UART.h"
+
+
+// #define DEBUG // Use to print out the results of command extract etc
+#define NUM_CMDS 1
+
+
+CMDs_t *CMD_setup(void) {
+    CMDs_t *p_commands = calloc(1, sizeof(CMDs_t));
+
+    // inilise the commands
+    CMD_t help = {
+        .name = "help",
+        .command = HELP_entry
+    };
+
+    p_commands->list = calloc(NUM_CMDS, sizeof(CMD_t));
+    p_commands->list[0] = help;
+
+    p_commands->length = NUM_CMDS;
+
+    return p_commands;
+}
 
 
 void CMD_execute(CMDs_t commands, char *cmd, char *args) {
     for (uint8_t i=0; i < commands.length; i++) {
+        #ifdef DEBUG
         UART_putc('\n');
         UART_puts("Checked: ");
         UART_puts(commands.list[i].name);
         UART_putc('\n');
 
         UART_puthex8(strcmp(commands.list[i].name, cmd));
-        
+        #endif // DEBUG
+
         if (strcmp(commands.list[i].name, cmd) == 0) {
             commands.list[i].command(args);
         }
     }
     
+    #ifdef DEBUG
     UART_putc('\n');
     UART_puts("Excuted: ");
     UART_puts(cmd);
     UART_putc('\n');
+    #endif // DEBUG
 }
 
 

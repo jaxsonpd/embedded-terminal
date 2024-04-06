@@ -20,16 +20,19 @@ USBDEVICE = /dev/ttyUSB0
 all: main.out
 
 # Compile the object files
-main.o: $(SRCDIR)/main.c $(INCDIR)/UART.h
+main.o: $(SRCDIR)/main.c $(SRCDIR)/command.h $(INCDIR)/UART.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 UART.o: $(INCDIR)/UART.c $(INCDIR)/UART.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-command.o: $(INCDIR)/command.c $(INCDIR)/command.c $(INCDIR)/UART.h
+command.o: $(SRCDIR)/command.c $(SRCDIR)/command.h $(INCDIR)/UART.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-main.out: main.o UART.o command.o
+help.o: $(SRCDIR)/help.c $(SRCDIR)/help.h $(INCDIR)/UART.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+main.out: main.o UART.o command.o help.o
 	$(CC) -mmcu=atmega328p $^ -o $@
 
 

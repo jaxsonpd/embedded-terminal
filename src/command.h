@@ -44,6 +44,15 @@ typedef struct {
     uint8_t length;
 } CMDs_t;
 
+
+/** 
+ * @brief Initalise the commands
+ * 
+ * @return a pointer to the command list struct
+ */
+CMDs_t *CMD_setup(void);
+
+
 /** 
  * @brief excute the command with the give arguments
  * @param commands an array of commands that are available
