@@ -7,6 +7,8 @@ This is a terminal designed to run on the avr series of micro controller which o
 
 `help`: View the available commands and get general information about the system.
 
+`clear`: Clear the terminal screen using the VT100 escape sequence.
+
 # Setup
 
 A full installation and setup process can be found in SETUP.md
@@ -22,27 +24,9 @@ A full installation and setup process can be found in SETUP.md
 | Encoding | `8n1` |
 
 ### Installation
-The author recommends using putty which can be installed using:
+To interact with the terminal using a serial monitor the author recommends using putty which can be installed using:
 ```
 sudo apt install putty
 ```
 
-To monitor the serial port on linux terminal use screen this requires some setup:
 
-Ensure screen is installed using:
-
-```
-sudo apt install screen
-```
-
-Then add the user to the dialout group using:
-
-```
-sudo usermod -a -G dialout $USER
-```
-
-Then launch screen using:
-
-```
-screen [DEVICE NAME] [BAUDRATE]
-```
