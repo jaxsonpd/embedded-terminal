@@ -14,12 +14,13 @@
 #include "include/UART.h"
 
 #include "help.h"
+#include "clear.h"
 
 #include "command.h"
 
 
 // #define DEBUG // Use to print out the results of command extract etc
-#define NUM_CMDS 1
+#define NUM_CMDS 2
 
 
 CMDs_t *CMD_setup(void) {
@@ -31,8 +32,14 @@ CMDs_t *CMD_setup(void) {
         .command = HELP_entry
     };
 
+    CMD_t clear = {
+        .name = "clear",
+        .command = CLR_entry
+    };
+
     p_commands->list = calloc(NUM_CMDS, sizeof(CMD_t));
     p_commands->list[0] = help;
+    p_commands->list[1] = clear;
 
     p_commands->length = NUM_CMDS;
 

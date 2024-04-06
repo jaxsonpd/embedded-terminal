@@ -16,6 +16,7 @@ uint8_t HELP_entry(char* args) {
     UART_puts("Embedded Terminal version 0.1\n");
     UART_puts("The following commands are available for the system:\n\n");
     UART_puts("help: print this message\n");
+    UART_puts("clear: clear the screen\n");
 
     return 0;
 }
