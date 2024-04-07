@@ -13,6 +13,12 @@ This is a terminal designed to run on the avr series of micro controller which o
 
 A full installation and setup process can be found in SETUP.md
 
+But assuming the target device is ATMEL Mega328P (Arduino Uno) then the device can be programmed using:
+
+```
+make flash serial
+```
+
 ## Monitoring the Serial Port
 ### Serial monitor settings
 
@@ -24,7 +30,7 @@ A full installation and setup process can be found in SETUP.md
 | Encoding | `8n1` |
 
 ### Installation
-To interact with the terminal using a serial monitor the author recommends using putty which can be installed using:
+To interact with the terminal use a serial monitor. The author recommends using putty which can be installed using:
 ```
 sudo apt install putty
 ```
