@@ -9,6 +9,8 @@ This is a terminal designed to run on the avr series of micro controller which o
 
 `clear`: Clear the terminal screen using the VT100 escape sequence.
 
+`led`: Toggle an lead connected to a spesific pin (in this case pin 13 on the arduino uno)
+ 
 # Setup
 
 A full installation and setup process can be found in SETUP.md
