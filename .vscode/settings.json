@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "stdint.h": "c",
-        "led.h": "c"
+        "led.h": "c",
+        "gpio.h": "c"
     }
 }

@@ -4,7 +4,6 @@
  * @date 2024-03-30
  * @brief A file to test the uart interface on the avr microcontrollers
  * 
- * This serial driver will always replace \r with \n in any incoming serial message
  * 
  * @cite http://www.rjhcoding.com/avrc-uart.php
  */

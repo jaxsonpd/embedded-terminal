@@ -3,6 +3,8 @@
  * @author Jack Duignan (JackpDuignan@gmail.com)
  * @date 2024-03-30
  * @brief A uart module for simple serial comunication
+ * 
+ * This serial driver will always replace \r with \n in any incoming serial message
  */
 
 
@@ -52,6 +54,9 @@ unsigned char UART_getc(void);
 
 /** 
  * @brief Get a whole line from the uart buffer 
+ * 
+ * This serial driver will always replace \r with \n in any incoming serial message
+ * 
  * @param p_buffer a pointer to a char array where the string will be stored
  * @param bufferLength the length of the buffer
  * 
