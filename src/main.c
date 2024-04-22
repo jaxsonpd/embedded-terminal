@@ -9,10 +9,15 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
+#include <avr/io.h>
 #include <util/delay.h>
 
 #include "include/UART.h"
+#include "include/GPIO.h"
+
+#include "utils.h"
 #include "command.h"
 
 
@@ -26,7 +31,7 @@ CMDs_t *p_commands;
  */
 void print_prompt (void) {
     char p_prompt[3] = "$>";
-    UART_puts(p_prompt);
+    printf(p_prompt);
 }
 
 
@@ -35,13 +40,13 @@ void print_prompt (void) {
  * 
  */
 void print_welcome (void) {
-    UART_puts("**************************\n");
+    printf("**************************\n");
 
-    UART_puts("Embedded Terminal v0.1\n");    
-    UART_puts("Created by: Jack Duignan\n");
-    UART_puts("Max input size: 64 chars, Use help for more info\n");
+    printf("Embedded Terminal v0.1\n");    
+    printf("Created by: Jack Duignan\n");
+    printf("Max input size: 64 chars, Use help for more info\n");
 
-    UART_puts("**************************\n");
+    printf("**************************\n");
 
 }
 
@@ -53,7 +58,7 @@ void print_welcome (void) {
  */
 bool setup (void) {
     // initalise comunications
-    UART_init(BAUD_RATE);
+    UART_init_stdio(BAUD_RATE);
 
     print_welcome();
 
@@ -68,13 +73,12 @@ int main (void) {
     setup();
 
     while (1) {
-        print_prompt();
+        // print_prompt();
 
         uint16_t c_maxInputSize = 64;
-        char input[c_maxInputSize];
+        char *input = (char *)calloc(c_maxInputSize, sizeof(char));
 
-
-        uint16_t inputSize = UART_getLineWithEcho(input, c_maxInputSize);
+        UTL_getLineWithEcho ("AVR:~$", input, c_maxInputSize);
 
         uint16_t c_maxCMDLength = 64;
         uint16_t c_maxArgsLength = 64;
@@ -82,9 +86,9 @@ int main (void) {
         char* cmd = (char *)calloc(c_maxCMDLength, sizeof(char));
         char* args = (char *)calloc(c_maxArgsLength, sizeof(char));
 
-        CMD_extract(input, inputSize, cmd, c_maxCMDLength, args, c_maxArgsLength);
+        CMD_extract(input, strlen(input), cmd, c_maxCMDLength, args, c_maxArgsLength);
 
-        if (inputSize == 1) {
+        if (strlen(cmd) == 1) {
             // Not a command so do not throw an error
         } else if (CMD_checkInput(cmd)) {
             // input is a valid command

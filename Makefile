@@ -20,7 +20,7 @@ USBDEVICE = /dev/ttyUSB0
 all: main.out
 
 # Compile the object files
-main.o: $(SRCDIR)/main.c $(SRCDIR)/command.h $(INCDIR)/UART.h
+main.o: $(SRCDIR)/main.c $(SRCDIR)/command.h $(SRCDIR)/utils.h $(INCDIR)/UART.h $(INCDIR)/GPIO.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 UART.o: $(INCDIR)/UART.c $(INCDIR)/UART.h
@@ -38,8 +38,16 @@ clear.o: $(SRCDIR)/clear.c $(SRCDIR)/clear.h $(INCDIR)/UART.h
 led.o: $(SRCDIR)/led.c $(SRCDIR)/led.h $(INCDIR)/UART.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-main.out: main.o UART.o command.o help.o clear.o led.o
+utils.o: $(SRCDIR)/utils.c $(SRCDIR)/utils.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+GPIO.o: $(INCDIR)/GPIO.c $(INCDIR)/GPIO.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+main.out: main.o UART.o command.o help.o clear.o led.o GPIO.o utils.o
 	$(CC) -mmcu=atmega328p $^ -o $@
+
+
 
 
 # Clean the project

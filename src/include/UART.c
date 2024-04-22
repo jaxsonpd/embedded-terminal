@@ -8,14 +8,23 @@
  * @cite http://www.rjhcoding.com/avrc-uart.php
  */
 
+#include <stdint.h>
+#include <stdio.h>
 
 #include <avr/io.h>
-#include <stdint.h>
 #include <util/delay.h>
 
 #include "UART.h"
 
+static int putc_stdio(char c, FILE *stream);
+static char getc_stdio(FILE *stream);
+
 #define F_CPU 16000000UL
+
+// Stream setup see https://www.nongnu.org/avr-libc/user-manual/group__avr__stdio.html
+// Stdin example to implement https://stackoverflow.com/questions/4023895/how-do-i-read-a-string-entered-by-the-user-in-c
+// static FILE g_stdout = FDEV_SETUP_STREAM(putc_stdio, NULL, _FDEV_SETUP_WRITE);
+// static FILE g_stdin = FDEV_SETUP_STREAM(NULL, getc_stdio, _FDEV_SETUP_READ);
 
 
 void UART_init (uint16_t baud) {
@@ -28,6 +37,47 @@ void UART_init (uint16_t baud) {
     // enable the uart pins
     UCSR0B |= (1 << RXEN0) | (1 << TXEN0);    
 }
+
+
+void UART_init_stdio (uint16_t baud) {
+    UART_init(baud);
+
+    // Assign in/out functions to stdio
+    FILE *stream = fdevopen(putc_stdio, getc_stdio);
+}
+
+/** 
+ * @brief Put a char to the serial monitor for use in stdio calls
+ * @param c the character to send
+ * @param stream a pointer to the file stream object
+ * 
+ * @return 0 if succesfull
+ */
+static int putc_stdio(char c, FILE *stream) {
+    // wait for transmit buffer to be empty
+    while(!(UCSR0A & (1 << UDRE0)));
+
+    // load data into transmit register
+    UDR0 = c;
+
+    return 0;
+}
+
+
+/** 
+ * @brief read a char from the serial monitor for use by stdio
+ * @param stream a pointer to the file stream
+ * 
+ * @return the char read
+ */
+static char getc_stdio(FILE *stream) {
+    // Wait until buffer is full
+    while(!(UCSR0A & (1 << RXC0)));
+
+    // return the data
+    return UDR0;
+}
+
 
 
 void UART_putc (unsigned char data) {

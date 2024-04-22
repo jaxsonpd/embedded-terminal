@@ -23,6 +23,14 @@ void UART_init (uint16_t baud);
 
 
 /** 
+ * @brief Initalise the UART interface to use stdio
+ * @param baud the baud rate to initalise too
+ * 
+ */
+void UART_init_stdio (uint16_t baud);
+
+
+/** 
  * @brief put a char to the serial buffer
  * @param data a char to put to the serial buffer
  * 

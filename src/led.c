@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdio.h>
 
 #include <avr/io.h>
 
@@ -32,14 +33,14 @@ static bool init(void) {
 
 uint8_t LED_entry(char *args) {
     if (!init()) {
-        UART_puts("LED initalisation failed please check configuration.\n");
+        printf("LED initalisation failed please check configuration.\n");
     }
 
     if (strcmp(args, "on") == 0) {
-        UART_puts("LED on\n");  
+        printf("LED on\n");  
         PORTB |= 1 << PORTB5; // set pin high
     } else {
-        UART_puts("LED off\n");
+        printf("LED off\n");
         PORTB &= ~(1 << PORTB5); // set pin low
     }
 

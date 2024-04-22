@@ -57,10 +57,10 @@ CMDs_t *CMD_setup(void) {
 void CMD_execute(CMDs_t commands, char *cmd, char *args) {
     for (uint8_t i=0; i < commands.length; i++) {
         #ifdef DEBUG
-        UART_putc('\n');
-        UART_puts("Checked: ");
-        UART_puts(commands.list[i].name);
-        UART_putc('\n');
+        printf('\n');
+        printf("Checked: ");
+        printf(commands.list[i].name);
+        printf('\n');
 
         UART_puthex8(strcmp(commands.list[i].name, cmd));
         #endif // DEBUG
@@ -71,10 +71,10 @@ void CMD_execute(CMDs_t commands, char *cmd, char *args) {
     }
     
     #ifdef DEBUG
-    UART_putc('\n');
-    UART_puts("Excuted: ");
-    UART_puts(cmd);
-    UART_putc('\n');
+    printf('\n');
+    printf("Excuted: ");
+    printf(cmd);
+    printf('\n');
     #endif // DEBUG
 }
 
@@ -121,6 +121,5 @@ bool CMD_checkInput(char *cmd) {
 }
 
 void CMD_printError(char *p_cmd) {
-    UART_puts(p_cmd);
-    UART_puts(" is not a valid cmd please try again \n \n");
+    printf("%s is not a valid cmd please try again \n \n", p_cmd);
 }
