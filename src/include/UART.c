@@ -16,12 +16,14 @@
 
 #include "UART.h"
 
-static int putchar_stdio(char c, FILE *stream);
+static int putc_stdio(char c, FILE *stream);
+static char getc_stdio(FILE *stream);
 
 #define F_CPU 16000000UL
 
 // Stream setup see https://www.nongnu.org/avr-libc/user-manual/group__avr__stdio.html
-static FILE g_stdout = FDEV_SETUP_STREAM(putchar_stdio, NULL, _FDEV_SETUP_WRITE);
+// Stdin example to implement https://stackoverflow.com/questions/4023895/how-do-i-read-a-string-entered-by-the-user-in-c
+static FILE g_stdout = FDEV_SETUP_STREAM(putc_stdio, getc_stdio, _FDEV_SETUP_RW);
 
 
 void UART_init (uint16_t baud) {
@@ -50,7 +52,7 @@ void UART_init_stdio (uint16_t baud) {
  * 
  * @return 0 if succesfull
  */
-static int putchar_stdio(char c, FILE *stream) {
+static int putc_stdio(char c, FILE *stream) {
     // wait for transmit buffer to be empty
     while(!(UCSR0A & (1 << UDRE0)));
 
@@ -58,6 +60,21 @@ static int putchar_stdio(char c, FILE *stream) {
     UDR0 = c;
 
     return 0;
+}
+
+
+/** 
+ * @brief read a char from the serial monitor for use by stdio
+ * @param stream a pointer to the file stream
+ * 
+ * @return the char read
+ */
+static char getc_stdio(FILE *stream) {
+    // Wait until buffer is full
+    while(!(UCSR0A & (1 << RXC0)));
+
+    // return the data
+    return UDR0;
 }
 
 
