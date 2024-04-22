@@ -2,7 +2,7 @@
  * @file command.c
  * @author Jack Duignan (JackpDuignan@gmail.com)
  * @date 2024-03-31
- * @brief This file handles command registration and excution
+ * @brief This file handles command registration and execution
  */
 
 
@@ -11,14 +11,11 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "include/UART.h"
-
 #include "help.h"
 #include "clear.h"
 #include "led.h"
 
 #include "command.h"
-
 
 // #define DEBUG // Use to print out the results of command extract etc
 #define NUM_CMDS 3
@@ -56,28 +53,11 @@ CMDs_t *CMD_setup(void) {
 
 void CMD_execute(CMDs_t commands, char *cmd, char *args) {
     for (uint8_t i=0; i < commands.length; i++) {
-        #ifdef DEBUG
-        printf('\n');
-        printf("Checked: ");
-        printf(commands.list[i].name);
-        printf('\n');
-
-        UART_puthex8(strcmp(commands.list[i].name, cmd));
-        #endif // DEBUG
-
         if (strcmp(commands.list[i].name, cmd) == 0) {
             commands.list[i].command(args);
         }
     }
-    
-    #ifdef DEBUG
-    printf('\n');
-    printf("Excuted: ");
-    printf(cmd);
-    printf('\n');
-    #endif // DEBUG
 }
-
 
 void CMD_extract(char *p_input, uint16_t inputSize, char *p_cmd, uint16_t maxCMDLength, 
                 char *p_args, uint16_t maxArgsLength) {
@@ -89,7 +69,7 @@ void CMD_extract(char *p_input, uint16_t inputSize, char *p_cmd, uint16_t maxCMD
     for (uint16_t i = 0; i < inputSize; i++) {
         c = p_input[i];
 
-        // proccess comand
+        // proccess command
         if (inCMD && (c == ' ')) { // CMD is over
             inCMD = false;
         } else if (c == '\n') { // input is over
@@ -105,14 +85,15 @@ void CMD_extract(char *p_input, uint16_t inputSize, char *p_cmd, uint16_t maxCMD
             inCMD = false;
         }
 
-        if (argsIndex >= maxArgsLength-1) { // cut off cmd and args interperitation
-            i = inputSize;
+        if (argsIndex >= maxArgsLength-1) { // cut off cmd and args interpretation
+            break;
         }
     }    
 
     p_args[argsIndex] = '\0';
     p_cmd[cmdIndex] = '\0';
 }
+
 
 
 bool CMD_checkInput(char *cmd) {

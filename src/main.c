@@ -57,7 +57,7 @@ void print_welcome (void) {
  * @return 1 if successful 0 otherwise
  */
 bool setup (void) {
-    // initalise comunications
+    // initialise communications
     UART_init_stdio(BAUD_RATE);
 
     print_welcome();

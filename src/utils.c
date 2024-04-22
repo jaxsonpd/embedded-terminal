@@ -12,6 +12,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "utils.h"
+
 
 uint8_t UTL_getLine (char *prmpt, char *buffer, size_t buffSize) {
     bool extra;
@@ -48,7 +50,7 @@ uint8_t UTL_getLineWithEcho (char *prmpt, char *buffer, size_t buffSize) {
     int8_t c;
 
     // Get input
-    while (((c = fgetc(stdin)) != EOF) && (c != '\n') && (                     c != '\r') && (index < buffSize - 1)) {
+    while (((c = fgetc(stdin)) != EOF) && (c != '\n') && (c != '\r') && (index < buffSize - 1)) {
         buffer[index++] = (char)c;
         printf("%c", c);
     }
@@ -62,3 +64,4 @@ uint8_t UTL_getLineWithEcho (char *prmpt, char *buffer, size_t buffSize) {
 
     return 0;
 }
+
