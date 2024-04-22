@@ -17,18 +17,18 @@
 
 
 uint8_t HELP_entry(char* args) {
-    UART_puts("Embedded Terminal version 0.1\n\n");
+    printf("Embedded Terminal version 0.1\n\n");
 
-    UART_puts("Use info embeddedTerminal for more infomation about this shell\n");
-    UART_puts("Commands marked with * are not implemented in this system\n");
-    UART_puts("The following commands are available for the system:\n\n");
+    printf("Use info embeddedTerminal for more infomation about this shell\n");
+    printf("Commands marked with * are not implemented in this system\n");
+    printf("The following commands are available for the system:\n\n");
     
-    UART_puts("help: print this message\n");
-    UART_puts("clear: clear the screen\n");
-    UART_puts("*info: display information about the command\n");
-    UART_puts("*neofecth: displays information about this system\n");
-    UART_puts("led: toggels the led connected to PB5\n");
-    UART_puts("*digitalWrite: writes to a output of the microcontroller\n");
+    printf("help: print this message\n");
+    printf("clear: clear the screen\n");
+    printf("*info: display information about the command\n");
+    printf("*neofecth: displays information about this system\n");
+    printf("led: toggels the led connected to PB5\n");
+    printf("*digitalWrite: writes to a output of the microcontroller\n");
 
     return 0;
 }
