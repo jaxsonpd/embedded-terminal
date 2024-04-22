@@ -24,5 +24,6 @@
  */
 uint8_t UTL_getLine (char *prmpt, char *buffer, size_t buffSize);
 
+uint8_t UTL_getLineWithEcho (char *prmpt, char *buffer, size_t buffSize);
 
 #endif // UTILS_H

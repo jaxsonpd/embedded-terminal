@@ -25,8 +25,6 @@
 
 CMDs_t *p_commands;
 
-uint16_t g_testpin = PIN(((const uint8_t)&PORTB), PORTB5);
-
 /** 
  * @brief Print a prompt to the screen
  * 
@@ -42,13 +40,13 @@ void print_prompt (void) {
  * 
  */
 void print_welcome (void) {
-    printf("**************************\r\n");
+    printf("**************************\n");
 
-    printf("Embedded Terminal v0.1\r\n");    
-    printf("Created by: Jack Duignan\r\n");
-    printf("Max input size: 64 chars, Use help for more info\r\n");
+    printf("Embedded Terminal v0.1\n");    
+    printf("Created by: Jack Duignan\n");
+    printf("Max input size: 64 chars, Use help for more info\n");
 
-    printf("**************************\r\n");
+    printf("**************************\n");
 
 }
 
@@ -61,10 +59,6 @@ void print_welcome (void) {
 bool setup (void) {
     // initalise comunications
     UART_init_stdio(BAUD_RATE);
-
-    GPIO_pinInit(g_testpin, OUTPUT);
-
-    GPIO_setOutput(g_testpin, 1);
 
     print_welcome();
 
@@ -82,10 +76,9 @@ int main (void) {
         // print_prompt();
 
         uint16_t c_maxInputSize = 64;
-        char input[c_maxInputSize];
+        char *input = (char *)calloc(c_maxInputSize, sizeof(char));
 
-        UTL_getLine ("AVR:~$", input, c_maxInputSize);
-        printf("%s\r\n", input);
+        UTL_getLineWithEcho ("AVR:~$", input, c_maxInputSize);
 
         uint16_t c_maxCMDLength = 64;
         uint16_t c_maxArgsLength = 64;
@@ -93,9 +86,9 @@ int main (void) {
         char* cmd = (char *)calloc(c_maxCMDLength, sizeof(char));
         char* args = (char *)calloc(c_maxArgsLength, sizeof(char));
 
-        CMD_extract(input, 40, cmd, c_maxCMDLength, args, c_maxArgsLength);
+        CMD_extract(input, strlen(input), cmd, c_maxCMDLength, args, c_maxArgsLength);
 
-        if (1 == 1) {
+        if (strlen(cmd) == 1) {
             // Not a command so do not throw an error
         } else if (CMD_checkInput(cmd)) {
             // input is a valid command

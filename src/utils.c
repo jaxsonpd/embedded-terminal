@@ -35,3 +35,30 @@ uint8_t UTL_getLine (char *prmpt, char *buffer, size_t buffSize) {
 
     return 0;
 }
+
+
+uint8_t UTL_getLineWithEcho (char *prmpt, char *buffer, size_t buffSize) {
+    
+    if (prmpt != NULL) {
+        printf("%s", prmpt);
+        fflush (stdout); // not required
+    }
+
+    size_t index = 0;
+    int8_t c;
+
+    // Get input
+    while (((c = fgetc(stdin)) != EOF) && (c != '\n') && (                     c != '\r') && (index < buffSize - 1)) {
+        buffer[index++] = (char)c;
+        printf("%c", c);
+    }
+
+    if (((c == '\n') || (c == '\r')) && (index < buffSize - 1)) {
+        buffer[index++] = '\n';
+        printf("\n");
+    }
+
+    buffer[index] = '\0';
+
+    return 0;
+}
