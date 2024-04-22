@@ -24,6 +24,15 @@
  */
 uint8_t UTL_getLine (char *prmpt, char *buffer, size_t buffSize);
 
+
+/** 
+ * @brief read a line from stdin but echo each character back
+ * @param prmpt the prompt to place before the input
+ * @param buffer the char buffer to place the input into
+ * @param bufSize the max buffer size
+ * 
+ * @return 0 if succesful
+ */
 uint8_t UTL_getLineWithEcho (char *prmpt, char *buffer, size_t buffSize);
 
 #endif // UTILS_H
