@@ -9,6 +9,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include <avr/io.h>
 #include <util/delay.h>
@@ -30,7 +31,7 @@ uint16_t g_testpin = PIN(((const uint8_t)&PORTB), PORTB5);
  */
 void print_prompt (void) {
     char p_prompt[3] = "$>";
-    UART_puts(p_prompt);
+    printf(p_prompt);
 }
 
 
@@ -39,13 +40,13 @@ void print_prompt (void) {
  * 
  */
 void print_welcome (void) {
-    UART_puts("**************************\n");
+    printf("**************************\n");
 
-    UART_puts("Embedded Terminal v0.1\n");    
-    UART_puts("Created by: Jack Duignan\n");
-    UART_puts("Max input size: 64 chars, Use help for more info\n");
+    printf("Embedded Terminal v0.1\n");    
+    printf("Created by: Jack Duignan\n");
+    printf("Max input size: 64 chars, Use help for more info\n");
 
-    UART_puts("**************************\n");
+    printf("**************************\n");
 
 }
 
@@ -57,7 +58,7 @@ void print_welcome (void) {
  */
 bool setup (void) {
     // initalise comunications
-    UART_init(BAUD_RATE);
+    UART_init_stdio(BAUD_RATE);
 
     GPIO_pinInit(g_testpin, OUTPUT);
 
