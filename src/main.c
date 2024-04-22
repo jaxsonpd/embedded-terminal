@@ -16,6 +16,8 @@
 
 #include "include/UART.h"
 #include "include/GPIO.h"
+
+#include "utils.h"
 #include "command.h"
 
 
@@ -40,13 +42,13 @@ void print_prompt (void) {
  * 
  */
 void print_welcome (void) {
-    printf("**************************\n");
+    printf("**************************\r\n");
 
-    printf("Embedded Terminal v0.1\n");    
-    printf("Created by: Jack Duignan\n");
-    printf("Max input size: 64 chars, Use help for more info\n");
+    printf("Embedded Terminal v0.1\r\n");    
+    printf("Created by: Jack Duignan\r\n");
+    printf("Max input size: 64 chars, Use help for more info\r\n");
 
-    printf("**************************\n");
+    printf("**************************\r\n");
 
 }
 
@@ -77,13 +79,13 @@ int main (void) {
     setup();
 
     while (1) {
-        print_prompt();
+        // print_prompt();
 
         uint16_t c_maxInputSize = 64;
         char input[c_maxInputSize];
 
-
-        uint16_t inputSize = UART_getLineWithEcho(input, c_maxInputSize);
+        UTL_getLine ("AVR:~$", input, c_maxInputSize);
+        printf("%s\r\n", input);
 
         uint16_t c_maxCMDLength = 64;
         uint16_t c_maxArgsLength = 64;
@@ -91,9 +93,9 @@ int main (void) {
         char* cmd = (char *)calloc(c_maxCMDLength, sizeof(char));
         char* args = (char *)calloc(c_maxArgsLength, sizeof(char));
 
-        CMD_extract(input, inputSize, cmd, c_maxCMDLength, args, c_maxArgsLength);
+        CMD_extract(input, 40, cmd, c_maxCMDLength, args, c_maxArgsLength);
 
-        if (inputSize == 1) {
+        if (1 == 1) {
             // Not a command so do not throw an error
         } else if (CMD_checkInput(cmd)) {
             // input is a valid command

@@ -23,7 +23,8 @@ static char getc_stdio(FILE *stream);
 
 // Stream setup see https://www.nongnu.org/avr-libc/user-manual/group__avr__stdio.html
 // Stdin example to implement https://stackoverflow.com/questions/4023895/how-do-i-read-a-string-entered-by-the-user-in-c
-static FILE g_stdout = FDEV_SETUP_STREAM(putc_stdio, getc_stdio, _FDEV_SETUP_RW);
+// static FILE g_stdout = FDEV_SETUP_STREAM(putc_stdio, NULL, _FDEV_SETUP_WRITE);
+// static FILE g_stdin = FDEV_SETUP_STREAM(NULL, getc_stdio, _FDEV_SETUP_READ);
 
 
 void UART_init (uint16_t baud) {
@@ -42,7 +43,7 @@ void UART_init_stdio (uint16_t baud) {
     UART_init(baud);
 
     // Assign in/out functions to stdio
-    stdout = &g_stdout;
+    FILE *stream = fdevopen(putc_stdio, getc_stdio);
 }
 
 /** 
