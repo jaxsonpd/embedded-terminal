@@ -10,15 +10,19 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include <avr/io.h>
 #include <util/delay.h>
 
 #include "include/UART.h"
+#include "include/GPIO.h"
 #include "command.h"
 
 
 #define BAUD_RATE 9600
 
 CMDs_t *p_commands;
+
+uint16_t g_testpin = PIN(((const uint8_t)&PORTB), PORTB5);
 
 /** 
  * @brief Print a prompt to the screen
@@ -54,6 +58,10 @@ void print_welcome (void) {
 bool setup (void) {
     // initalise comunications
     UART_init(BAUD_RATE);
+
+    GPIO_pinInit(g_testpin, OUTPUT);
+
+    GPIO_setOutput(g_testpin, 1);
 
     print_welcome();
 

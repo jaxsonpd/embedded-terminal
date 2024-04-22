@@ -31,17 +31,19 @@ void GPIO_pinInit(uint16_t pin, pinType_t type) {
 
 void GPIO_setOutput(uint16_t pin, bool value) {
     if (value) {
-        *(uint8_t *)PINBANK(pin) &= (1 << PINNUM(pin));
+        *(uint8_t *)PINBANK(pin) |= (1 << PINNUM(pin));
     } else {
-        *(uint8_t *)PINBANK(pin) &= ~(1 << PINNUM(pin));
+        *(uint8_t *)PINBANK(pin) |= ~(1 << PINNUM(pin));
     }
 }
 
 
 bool GPIO_toggleOutput(uint16_t pin) {
-    return 0;
+    *(uint8_t *)PINBANK(pin) ^= (1 << PINNUM(pin));
+
+    return *(uint8_t *)(PINBANK(pin)-2); // PINx regs is 2 addresses lower
 }
 
 bool GPIO_getState(uint16_t pin) {
-    return 0;
+    return *(uint8_t *)(PINBANK(pin)-2); // PINx regs is 2 addresses lower
 }

@@ -14,7 +14,7 @@
 #include <stdbool.h>
 
 /// Define a pin for use in the GPIO functions should be asigned to a uint16_t
-#define PIN(bank, num) (((bank - 'A') << 8) | (num))
+#define PIN(bank, num) (((bank) << 8) | (num))
 
 /// Extract the pins number
 #define PINNUM(pin) (pin & 255) 
