@@ -15,7 +15,7 @@
 #include "utils.h"
 
 
-uint8_t UTL_getLine (char *prmpt, char *buffer, size_t buffSize) {
+uint8_t utils_get_line (char *prmpt, char *buffer, size_t buffSize) {
     bool extra;
     char ch;
 
@@ -39,7 +39,7 @@ uint8_t UTL_getLine (char *prmpt, char *buffer, size_t buffSize) {
 }
 
 
-uint8_t UTL_getLineWithEcho (char *prmpt, char *buffer, size_t buffSize) {
+uint8_t utils_get_line_echo (char *prmpt, char *buffer, size_t buffSize) {
     
     if (prmpt != NULL) {
         printf("%s", prmpt);

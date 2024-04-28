@@ -62,7 +62,7 @@ bool setup (void) {
 
     print_welcome();
 
-    p_commands = CMD_setup();
+    p_commands = cmd_init();
 
     return true;
 } 
@@ -78,7 +78,7 @@ int main (void) {
         uint16_t c_maxInputSize = 64;
         char *input = (char *)calloc(c_maxInputSize, sizeof(char));
 
-        UTL_getLineWithEcho ("AVR:~$", input, c_maxInputSize);
+        utils_get_line_echo ("AVR:~$", input, c_maxInputSize);
 
         uint16_t c_maxCMDLength = 64;
         uint16_t c_maxArgsLength = 64;
@@ -86,16 +86,16 @@ int main (void) {
         char* cmd = (char *)calloc(c_maxCMDLength, sizeof(char));
         char* args = (char *)calloc(c_maxArgsLength, sizeof(char));
 
-        CMD_extract(input, strlen(input), cmd, c_maxCMDLength, args, c_maxArgsLength);
+        cmd_extract(input, strlen(input), cmd, c_maxCMDLength, args, c_maxArgsLength);
 
         if (strlen(cmd) == 1) {
             // Not a command so do not throw an error
-        } else if (CMD_checkInput(cmd)) {
+        } else if (cmd_check_input(cmd)) {
             // input is a valid command
-            CMD_execute(*p_commands, cmd, args);
+            cmd_execute(*p_commands, cmd, args);
         } else {
             // input is an error
-            CMD_printError(cmd);
+            cmd_print_error(cmd);
         }
 
         free(cmd);

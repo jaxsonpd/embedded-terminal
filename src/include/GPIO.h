@@ -37,7 +37,7 @@ typedef enum {
  * @param type the pin type (OUTPUT, INPUT_NO_PULLUP, INPUT_PULLUP)
  * 
  */
-void GPIO_pinInit(uint16_t pin, pinType_t type);
+void GPIO_pin_init(uint16_t pin, pinType_t type);
 
 
 /** 
@@ -45,7 +45,7 @@ void GPIO_pinInit(uint16_t pin, pinType_t type);
  * @param pin the pin to set the output state for
  * @param value the output value
  */
-void GPIO_setOutput(uint16_t pin, bool value);
+void GPIO_set_output(uint16_t pin, bool value);
 
 
 /** 
@@ -54,7 +54,7 @@ void GPIO_setOutput(uint16_t pin, bool value);
  * 
  * @return the state of the pin
  */
-bool GPIO_toggleOutput(uint16_t pin);
+bool GPIO_toggle_output(uint16_t pin);
 
 
 /** 

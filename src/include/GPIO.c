@@ -13,7 +13,7 @@
 
 #include "GPIO.h"
 
-void GPIO_pinInit(uint16_t pin, pinType_t type) {
+void GPIO_pin_init(uint16_t pin, pinType_t type) {
     // Set the DDR and PORT to match the type
     volatile uint8_t *DDR_pin = PINBANK(pin) - 1; // DDRX is one regs lower then PORTX 
     
@@ -29,7 +29,7 @@ void GPIO_pinInit(uint16_t pin, pinType_t type) {
 }
 
 
-void GPIO_setOutput(uint16_t pin, bool value) {
+void GPIO_set_output(uint16_t pin, bool value) {
     if (value) {
         *(uint8_t *)PINBANK(pin) |= (1 << PINNUM(pin));
     } else {
@@ -38,7 +38,7 @@ void GPIO_setOutput(uint16_t pin, bool value) {
 }
 
 
-bool GPIO_toggleOutput(uint16_t pin) {
+bool GPIO_toggle_output(uint16_t pin) {
     *(uint8_t *)PINBANK(pin) ^= (1 << PINNUM(pin));
 
     return *(uint8_t *)(PINBANK(pin)-2); // PINx regs is 2 addresses lower

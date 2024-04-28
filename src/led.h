@@ -19,7 +19,7 @@
  * 
  * @return 0 if succesful
  */
-uint8_t LED_entry(char *args);
+uint8_t led_entry(char *args);
 
 
 

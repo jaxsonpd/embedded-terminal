@@ -15,7 +15,7 @@
 
 #define TERM_CLEAR "\033[2J\033[H\033[3J" // The VT100 clear screen command
 
-uint8_t CLR_entry(char *args) {
+uint8_t clear_entry(char *args) {
     printf(TERM_CLEAR);
 
     return 0;

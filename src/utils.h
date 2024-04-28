@@ -22,7 +22,7 @@
  * 
  * @return 0 if succesful 1 if no input 2 if input is to long
  */
-uint8_t UTL_getLine (char *prmpt, char *buffer, size_t buffSize);
+uint8_t utils_get_line (char *prmpt, char *buffer, size_t buffSize);
 
 
 /** 
@@ -33,6 +33,6 @@ uint8_t UTL_getLine (char *prmpt, char *buffer, size_t buffSize);
  * 
  * @return 0 if succesful
  */
-uint8_t UTL_getLineWithEcho (char *prmpt, char *buffer, size_t buffSize);
+uint8_t utils_get_line_echo (char *prmpt, char *buffer, size_t buffSize);
 
 #endif // UTILS_H

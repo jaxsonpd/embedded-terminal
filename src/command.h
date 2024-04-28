@@ -50,7 +50,7 @@ typedef struct {
  * 
  * @return a pointer to the command list struct
  */
-CMDs_t *CMD_setup(void);
+CMDs_t *cmd_init(void);
 
 
 /** 
@@ -59,7 +59,7 @@ CMDs_t *CMD_setup(void);
  * @param cmd a pointer to the command string
  * @param args a pointer to the arguments string
  */
-void CMD_execute(CMDs_t commands, char *cmd, char *args);
+void cmd_execute(CMDs_t commands, char *cmd, char *args);
 
 
 /** 
@@ -72,7 +72,7 @@ void CMD_execute(CMDs_t commands, char *cmd, char *args);
  * @param maxArgsLength the size of the args string
  * 
  */
-void CMD_extract(char *p_input, uint16_t inputSize, char *p_cmd, uint16_t maxCMDLength,
+void cmd_extract(char *p_input, uint16_t inputSize, char *p_cmd, uint16_t maxCMDLength,
                 char *p_args, uint16_t maxArgsLength);
 
 
@@ -82,7 +82,7 @@ void CMD_extract(char *p_input, uint16_t inputSize, char *p_cmd, uint16_t maxCMD
  * 
  * @return 1 if excutable 0 otherwise
  */
-bool CMD_checkInput(char *cmd);
+bool cmd_check_input(char *cmd);
 
 
 /** 
@@ -90,6 +90,6 @@ bool CMD_checkInput(char *cmd);
  * @param p_cmd the command that is not excutable
  * 
  */
-void CMD_printError(char *p_cmd);
+void cmd_print_error(char *p_cmd);
 
 #endif // COMMAND_H

@@ -31,7 +31,7 @@ static bool init(void) {
     return true;
 }
 
-uint8_t LED_entry(char *args) {
+uint8_t led_entry(char *args) {
     if (!init()) {
         printf("LED initalisation failed please check configuration.\n");
     }

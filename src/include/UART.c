@@ -120,7 +120,7 @@ unsigned char UART_getc(void) {
 }
 
 
-uint16_t UART_getLine(char* p_buffer, uint16_t bufferLength) {
+uint16_t UART_get_line(char* p_buffer, uint16_t bufferLength) {
     uint16_t bufIdx = 0;
     char c;
 
@@ -141,7 +141,7 @@ uint16_t UART_getLine(char* p_buffer, uint16_t bufferLength) {
     return bufIdx; 
 }
 
-uint16_t UART_getLineWithEcho(char* p_buffer, uint16_t bufferLength) {
+uint16_t UART_get_line_echo(char* p_buffer, uint16_t bufferLength) {
     uint16_t bufIdx = 0;
     char c;
 

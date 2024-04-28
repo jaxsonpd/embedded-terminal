@@ -70,7 +70,7 @@ unsigned char UART_getc(void);
  * 
  * @return the resulting length of the line
  */
-uint16_t UART_getLine(char* p_buffer, uint16_t bufferLength);
+uint16_t UART_get_line(char* p_buffer, uint16_t bufferLength);
 
 
 /** 
@@ -80,5 +80,5 @@ uint16_t UART_getLine(char* p_buffer, uint16_t bufferLength);
  * 
  * @return the resulting length of the line
  */
-uint16_t UART_getLineWithEcho(char* p_buffer, uint16_t bufferLength);
+uint16_t UART_get_line_echo(char* p_buffer, uint16_t bufferLength);
 #endif // UART_H

@@ -21,23 +21,23 @@
 #define NUM_CMDS 3
 
 
-CMDs_t *CMD_setup(void) {
+CMDs_t *cmd_init(void) {
     CMDs_t *p_commands = calloc(1, sizeof(CMDs_t));
 
     // inilise the commands
     CMD_t help = {
         .name = "help",
-        .command = HELP_entry
+        .command = help_entry
     };
 
     CMD_t clear = {
         .name = "clear",
-        .command = CLR_entry
+        .command = clear_entry
     };
 
     CMD_t led = {
         .name = "led",
-        .command = LED_entry
+        .command = led_entry
     };
 
     p_commands->list = calloc(NUM_CMDS, sizeof(CMD_t));
@@ -51,7 +51,7 @@ CMDs_t *CMD_setup(void) {
 }
 
 
-void CMD_execute(CMDs_t commands, char *cmd, char *args) {
+void cmd_execute(CMDs_t commands, char *cmd, char *args) {
     for (uint8_t i=0; i < commands.length; i++) {
         if (strcmp(commands.list[i].name, cmd) == 0) {
             commands.list[i].command(args);
@@ -59,7 +59,7 @@ void CMD_execute(CMDs_t commands, char *cmd, char *args) {
     }
 }
 
-void CMD_extract(char *p_input, uint16_t inputSize, char *p_cmd, uint16_t maxCMDLength, 
+void cmd_extract(char *p_input, uint16_t inputSize, char *p_cmd, uint16_t maxCMDLength, 
                 char *p_args, uint16_t maxArgsLength) {
     char c = 0;
     uint16_t cmdIndex = 0;
@@ -96,11 +96,11 @@ void CMD_extract(char *p_input, uint16_t inputSize, char *p_cmd, uint16_t maxCMD
 
 
 
-bool CMD_checkInput(char *cmd) {
+bool cmd_check_input(char *cmd) {
 
     return 1;
 }
 
-void CMD_printError(char *p_cmd) {
+void cmd_print_error(char *p_cmd) {
     printf("%s is not a valid cmd please try again \n \n", p_cmd);
 }
