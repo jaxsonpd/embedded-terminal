@@ -46,7 +46,7 @@ typedef struct {
 
 
 /** 
- * @brief Initalise the commands
+ * @brief Initialise the commands
  * 
  * @return a pointer to the command list struct
  */
@@ -54,7 +54,8 @@ CMDs_t *cmd_init(void);
 
 
 /** 
- * @brief excute the command with the give arguments
+ * @brief Execute the command with the give arguments
+ * 
  * @param commands an array of commands that are available
  * @param cmd a pointer to the command string
  * @param args a pointer to the arguments string
@@ -63,21 +64,20 @@ void cmd_execute(CMDs_t commands, char *cmd, char *args);
 
 
 /** 
- * @brief exctract the command from an input buffer
- * @param p_input a pointer to the input string
- * @param inputSize the size of the input string
- * @param p_cmd a pointer to the command string
- * @param maxCMDLength the size of the command string
- * @param p_args a pointer to the args string
- * @param maxArgsLength the size of the args string
+ * @brief Extract the command from an input buffer
  * 
+ * @param s_input the input string
+ * @param argc the maximum number of arguments
+ * @param argv a pointer to the argv array of arguments to populate
+ * 
+ * @return the resulting length of argv
  */
-void cmd_extract(char *p_input, uint16_t inputSize, char *p_cmd, uint16_t maxCMDLength,
-                char *p_args, uint16_t maxArgsLength);
+uint16_t cmd_extract(char *s_input, uint16_t argc, char* argv[]);
 
 
 /** 
- * @brief check if the inputed command is an excutable
+ * @brief check if the inputted command is an executable
+ * 
  * @param cmd the command to check
  * 
  * @return 1 if excutable 0 otherwise
@@ -86,8 +86,8 @@ bool cmd_check_input(char *cmd);
 
 
 /** 
- * @brief print an error as the given command is not an excutable
- * @param p_cmd the command that is not excutable
+ * @brief print an error as the given command is not an executable
+ * @param p_cmd the command that is not executable
  * 
  */
 void cmd_print_error(char *p_cmd);

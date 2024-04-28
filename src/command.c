@@ -59,39 +59,10 @@ void cmd_execute(CMDs_t commands, char *cmd, char *args) {
     }
 }
 
-void cmd_extract(char *p_input, uint16_t inputSize, char *p_cmd, uint16_t maxCMDLength, 
-                char *p_args, uint16_t maxArgsLength) {
-    char c = 0;
-    uint16_t cmdIndex = 0;
-    uint16_t argsIndex = 0;
-    bool inCMD = true;
-
-    for (uint16_t i = 0; i < inputSize; i++) {
-        c = p_input[i];
-
-        // proccess command
-        if (inCMD && (c == ' ')) { // CMD is over
-            inCMD = false;
-        } else if (c == '\n') { // input is over
-            break;
-        } else if (inCMD) {
-            p_cmd[cmdIndex++] = c;
-        } else {
-            p_args[argsIndex++] = c;
-        }
-
-        // Check sizing
-        if (cmdIndex >= maxCMDLength-1) { // cut off the command
-            inCMD = false;
-        }
-
-        if (argsIndex >= maxArgsLength-1) { // cut off cmd and args interpretation
-            break;
-        }
-    }    
-
-    p_args[argsIndex] = '\0';
-    p_cmd[cmdIndex] = '\0';
+uint16_t cmd_extract(char *s_input, uint16_t argc, char* argv[]) {
+    for (uint16_t i = 0; i < strlen(s_input); i++) {
+        
+    }
 }
 
 

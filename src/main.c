@@ -80,13 +80,11 @@ int main (void) {
 
         utils_get_line_echo ("AVR:~$", input, c_maxInputSize);
 
-        uint16_t c_maxCMDLength = 64;
-        uint16_t c_maxArgsLength = 64;
+        uint16_t c_argc_max = 64;
 
-        char* cmd = (char *)calloc(c_maxCMDLength, sizeof(char));
-        char* args = (char *)calloc(c_maxArgsLength, sizeof(char));
+        char* argv = (char *)calloc(c_argc_max, sizeof(char));
 
-        cmd_extract(input, strlen(input), cmd, c_maxCMDLength, args, c_maxArgsLength);
+        cmd_extract(input, argv, c_argc_max);
 
         if (strlen(cmd) == 1) {
             // Not a command so do not throw an error
