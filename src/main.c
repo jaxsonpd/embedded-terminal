@@ -82,22 +82,23 @@ int main (void) {
 
         uint16_t c_argc_max = 64;
 
-        char* argv = (char *)calloc(c_argc_max, sizeof(char));
+        char* argv = (char *)calloc(c_argc_max, sizeof(char *));
 
-        cmd_extract(input, argv, c_argc_max);
+        uint8_t argc = cmd_extract(input, argv, c_argc_max);
 
-        if (strlen(cmd) == 1) {
-            // Not a command so do not throw an error
-        } else if (cmd_check_input(cmd)) {
-            // input is a valid command
-            cmd_execute(*p_commands, cmd, args);
-        } else {
-            // input is an error
-            cmd_print_error(cmd);
-        }
 
-        free(cmd);
-        free(args);
+        // if (strlen(cmd) == 1) {
+        //     // Not a command so do not throw an error
+        // } else if (cmd_check_input(cmd)) {
+        //     // input is a valid command
+        //     cmd_execute(*p_commands, cmd, args);
+        // } else {
+        //     // input is an error
+        //     cmd_print_error(cmd);
+        // }
+
+        // free(cmd);
+        // free(args);
     }
 
 }
