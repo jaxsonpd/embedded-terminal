@@ -19,6 +19,7 @@
 
 // #define DEBUG // Use to print out the results of command extract etc
 #define NUM_CMDS 3
+#define MAX_SPACES 2 // the maximum number of spaces in a row in a command
 
 
 CMDs_t *cmd_init(void) {
@@ -59,10 +60,25 @@ void cmd_execute(CMDs_t commands, char *cmd, char *args) {
     }
 }
 
-uint16_t cmd_extract(char *s_input, uint16_t argc, char* argv[]) {
+uint16_t cmd_extract(char *s_input, uint16_t argc_max, char* argv[]) {
+    uint8_t space_count = 0;
+    uint8_t arg_number = 0;
+    uint8_t char_number = 0;
+
     for (uint16_t i = 0; i < strlen(s_input); i++) {
-        
+        if (s_input[i] == " ") {
+            if (++space_count > MAX_SPACES) {
+                return arg_number-1;
+            }
+            arg_number++;
+            char_number = 0;
+        } else {
+            argv[arg_number][char_number] = s_input[i];
+            char_number++;
+        }
     }
+
+    return arg_number;
 }
 
 

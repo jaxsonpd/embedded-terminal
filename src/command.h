@@ -67,12 +67,12 @@ void cmd_execute(CMDs_t commands, char *cmd, char *args);
  * @brief Extract the command from an input buffer
  * 
  * @param s_input the input string
- * @param argc the maximum number of arguments
+ * @param argc_max the maximum number of arguments
  * @param argv a pointer to the argv array of arguments to populate
  * 
  * @return the resulting length of argv
  */
-uint16_t cmd_extract(char *s_input, uint16_t argc, char* argv[]);
+uint16_t cmd_extract(char *s_input, uint16_t argc_max, char* argv[]);
 
 
 /** 
@@ -80,7 +80,7 @@ uint16_t cmd_extract(char *s_input, uint16_t argc, char* argv[]);
  * 
  * @param cmd the command to check
  * 
- * @return 1 if excutable 0 otherwise
+ * @return 1 if executable 0 otherwise
  */
 bool cmd_check_input(char *cmd);
 
