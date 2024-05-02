@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "help.h"
 #include "clear.h"
@@ -63,31 +64,43 @@ void cmd_execute(CMDs_t commands, char *cmd, char *args) {
 
 uint16_t cmd_extract(char *s_input, uint16_t argc_max, char* argv[]) {
     bool first_space = true;
+    bool new_arg = false;
     uint8_t arg_number = 0;
     uint8_t char_number = 0;
+
 
     argv[0] = (char *)calloc(ARG_SIZE, sizeof(char));
 
     for (uint16_t i = 0; i < strlen(s_input); i++) {
-        if (s_input[i] == "\n") { // end of command
-            return arg_number;
-        } else if (s_input[i] == " ") {
+        printf("%c\n", s_input[i]);
+
+        if (s_input[i] == '\n') { // end of command
+            return arg_number+1;
+
+        } else if (s_input[i] == ' ') {
             if (first_space) { // ignore spaces between commands
                 argv[arg_number][char_number] = '\0';
 
-                arg_number++;
-                char_number = 0;
-
-                argv[arg_number] = (char *)calloc(ARG_SIZE, sizeof(char));
+                new_arg = true;
                 
                 first_space = false;
             }
         } else {
             if (char_number < ARG_SIZE) {
+                if (new_arg) {
+                    arg_number++;
+                    char_number = 0;
+
+                    argv[arg_number] = (char *)calloc(ARG_SIZE, sizeof(char));
+
+                    new_arg = false;
+                }
+
                 argv[arg_number][char_number] = s_input[i];
 
                 char_number++;
-                first_space = true; // must be at new space
+                first_space = true; // must be at new arg
+
             } else {
                 argv[arg_number][char_number] = '\0';
                 return arg_number;

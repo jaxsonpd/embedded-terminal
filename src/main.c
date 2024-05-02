@@ -79,13 +79,20 @@ int main (void) {
         char *input = (char *)calloc(c_maxInputSize, sizeof(char));
 
         utils_get_line_echo ("AVR:~$", input, c_maxInputSize);
+        
+        printf("Input: %s\n", input);
 
         uint16_t c_argc_max = 64;
 
-        char* argv = (char *)calloc(c_argc_max, sizeof(char *));
+        char** argv = (char **)calloc(c_argc_max, sizeof(char *));
 
-        uint8_t argc = cmd_extract(input, argv, c_argc_max);
+        uint8_t argc = cmd_extract(input, c_argc_max, argv);
 
+        printf("Args (%d): \n", argc);
+
+        for (int i = 0; i < argc; i++) {
+            printf("%d: %s\n", i, argv[i]);
+        }
 
         // if (strlen(cmd) == 1) {
         //     // Not a command so do not throw an error
@@ -97,8 +104,11 @@ int main (void) {
         //     cmd_print_error(cmd);
         // }
 
-        // free(cmd);
-        // free(args);
+        for (int i = 0; i < argc; i++) {
+            free(argv[i]);
+        }
+
+        free (argv);
     }
 
 }
