@@ -94,15 +94,9 @@ int main (void) {
             printf("%d: %s\n", i, argv[i]);
         }
 
-        // if (strlen(cmd) == 1) {
-        //     // Not a command so do not throw an error
-        // } else if (cmd_check_input(cmd)) {
-        //     // input is a valid command
-        //     cmd_execute(*p_commands, cmd, args);
-        // } else {
-        //     // input is an error
-        //     cmd_print_error(cmd);
-        // }
+        if (argc) {
+            cmd_execute(*p_commands, argc, argv);
+        }
 
         for (int i = 0; i < argc; i++) {
             free(argv[i]);

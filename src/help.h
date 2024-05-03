@@ -19,7 +19,7 @@
  * 
  * @return the status of the command
  */
-uint8_t help_entry(char* args);
+uint8_t help_entry(uint16_t argc, char **argv);
 
 
 #endif // HELP_H

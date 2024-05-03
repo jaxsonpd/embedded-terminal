@@ -25,7 +25,7 @@
  */
 typedef struct {
     char *name; 
-    uint8_t (*command)(char *); 
+    uint8_t (*command)(uint16_t argc, char **argv); 
 } CMD_t;
 
 
@@ -57,10 +57,10 @@ CMDs_t *cmd_init(void);
  * @brief Execute the command with the give arguments
  * 
  * @param commands an array of commands that are available
- * @param cmd a pointer to the command string
- * @param args a pointer to the arguments string
+ * @param argc the number of arguments passed to the command
+ * @param argv the array of arguments
  */
-void cmd_execute(CMDs_t commands, char *cmd, char *args);
+uint8_t cmd_execute(CMDs_t commands, uint16_t argc, char **argv);
 
 
 /** 

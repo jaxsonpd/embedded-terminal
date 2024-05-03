@@ -21,7 +21,7 @@
  * 
  * @return the result of excuting the command
  */
-uint8_t clear_entry(char *args);
+uint8_t clear_entry(uint16_t argc, char **argv);
 
 
 #endif // CLEAR_H

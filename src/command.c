@@ -54,10 +54,16 @@ CMDs_t *cmd_init(void) {
 }
 
 
-void cmd_execute(CMDs_t commands, char *cmd, char *args) {
+uint8_t cmd_execute(CMDs_t commands, uint16_t argc, char **argv) {
     for (uint8_t i=0; i < commands.length; i++) {
-        if (strcmp(commands.list[i].name, cmd) == 0) {
-            commands.list[i].command(args);
+#ifdef DEBUG
+        printf("Checking %s\n", commands.list[i].name);
+#endif // DEBUG
+        if (strcmp(commands.list[i].name, argv[0]) == 0) {
+#ifdef DEBUG
+            printf("Executing: %s\n", commands.list[i].name);
+#endif // DEBUG
+            return commands.list[i].command(argc, argv);
         }
     }
 }
@@ -65,8 +71,8 @@ void cmd_execute(CMDs_t commands, char *cmd, char *args) {
 uint16_t cmd_extract(char *s_input, uint16_t argc_max, char* argv[]) {
     bool first_space = true;
     bool new_arg = false;
-    uint8_t arg_number = 0;
-    uint8_t char_number = 0;
+    uint16_t arg_number = 0;
+    uint16_t char_number = 0;
 
 
     argv[0] = (char *)calloc(ARG_SIZE, sizeof(char));

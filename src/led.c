@@ -31,12 +31,12 @@ static bool init(void) {
     return true;
 }
 
-uint8_t led_entry(char *args) {
+uint8_t led_entry(uint16_t argc, char **argv) {
     if (!init()) {
-        printf("LED initalisation failed please check configuration.\n");
+        printf("LED init failed please check configuration.\n");
     }
 
-    if (strcmp(args, "on") == 0) {
+    if (strcmp(argv[1], "on") == 0) {
         printf("LED on\n");  
         PORTB |= 1 << PORTB5; // set pin high
     } else {

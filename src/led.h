@@ -17,9 +17,9 @@
  * @brief The entry point for the led command
  * @param args the argument string
  * 
- * @return 0 if succesful
+ * @return 0 if successful
  */
-uint8_t led_entry(char *args);
+uint8_t led_entry(uint16_t argc, char **argv);
 
 
 
