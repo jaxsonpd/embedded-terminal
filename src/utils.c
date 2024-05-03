@@ -78,21 +78,6 @@ int16_t opterr=1;
 char optopt;
 
 
-/** 
- * @brief Get the options from a list of command line options.
- *  
- * This implementation is based on the GNU implementation of getopt() as often defined in <unistd.h>
- * 
- * @cite https://man7.org/linux/man-pages/man3/getopt.3.html
- * @related optarg, optind, opterr, optopt
- * 
- * @param argc the number of arguments passed
- * @param argv the list of each argument passed
- * @param optstring the string that defines the available options
- * 
- * @return successively each option character and -1 at end, '?' is returned when an option is not recognised and ':' 
- * returned when a required argument is not provided
- */
 int16_t getopt (int argc, char* argv[], char *optstring) {
     bool isopt = false;
     bool reqarg = false;
@@ -100,11 +85,16 @@ int16_t getopt (int argc, char* argv[], char *optstring) {
 
     char* opt = argv[optind];
 
+    printf("opt: %s\n", opt);
+
     // Check to see if opt should be processed
-    if (optind >= argc) return -1;
+    if (optind >= argc) {
+        optind = 1;
+        return -1;
+    }
 
     if (opt[0] == '-') { // it is an option
-        for (uint16_t i = 0; i >= strlen(optstring); i++) {
+        for (uint16_t i = 0; i <= strlen(optstring); i++) {
             if (optstring[i] == opt[1]) {
                 if (optstring[i+1] == ':') {
                     if (optstring[i+2] == ':') reqargopt = true;
@@ -125,16 +115,20 @@ int16_t getopt (int argc, char* argv[], char *optstring) {
         optind++;
         // need to include printing error message
         return '?';
+
     } else if (reqarg) {
         if ((optind != argc) && (argv[optind+1][0] != '-')) { // There is an argument
             optarg = argv[optind+1];
             optind += 2;
+            
             return opt[1];
         } else {
             optind++;
             optopt = opt;
+
             return ':';
         }
+
     } else if (reqargopt) {
         if ((optind != argc) && (argv[optind+1][0] != '-')) { // There is an argument
             optarg = argv[optind+1];
@@ -145,6 +139,7 @@ int16_t getopt (int argc, char* argv[], char *optstring) {
 
         return opt[1];
     } else {
+
         optind++;
         return opt[1];
     }

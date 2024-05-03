@@ -21,7 +21,7 @@
 #include "command.h"
 
 
-#define BAUD_RATE 9600
+#define BAUD_RATE 57600
 
 CMDs_t *p_commands;
 

@@ -23,10 +23,7 @@ all: main.out
 main.o: $(SRCDIR)/main.c $(SRCDIR)/command.h $(SRCDIR)/utils.h $(INCDIR)/UART.h $(INCDIR)/GPIO.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-UART.o: $(INCDIR)/UART.c $(INCDIR)/UART.h
-	$(CC) -c $(CFLAGS) $< -o $@
-
-command.o: $(SRCDIR)/command.c $(SRCDIR)/command.h $(INCDIR)/UART.h
+command.o: $(SRCDIR)/command.c $(SRCDIR)/command.h $(INCDIR)/UART.h $(SRCDIR)/IO.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 help.o: $(SRCDIR)/help.c $(SRCDIR)/help.h $(INCDIR)/UART.h
@@ -38,16 +35,20 @@ clear.o: $(SRCDIR)/clear.c $(SRCDIR)/clear.h $(INCDIR)/UART.h
 led.o: $(SRCDIR)/led.c $(SRCDIR)/led.h $(INCDIR)/UART.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+IO.o: $(SRCDIR)/IO.c $(SRCDIR)/IO.h $(SRCDIR)/utils.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
 utils.o: $(SRCDIR)/utils.c $(SRCDIR)/utils.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+UART.o: $(INCDIR)/UART.c $(INCDIR)/UART.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 GPIO.o: $(INCDIR)/GPIO.c $(INCDIR)/GPIO.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-main.out: main.o UART.o command.o help.o clear.o led.o GPIO.o utils.o
+main.out: main.o UART.o command.o help.o clear.o led.o GPIO.o utils.o IO.o
 	$(CC) -mmcu=atmega328p $^ -o $@
-
-
 
 
 # Clean the project
@@ -66,4 +67,4 @@ flash: main.out
 # Launch a serial prompt
 .PHONY: serial
 serial: 
-	putty -serial $(USBDEVICE) -sercfg 8,'1',9600,'n' -fn "Monospace 13"
+	putty -serial $(USBDEVICE) -sercfg 8,'1',57600,'n' -fn "Monospace 13"

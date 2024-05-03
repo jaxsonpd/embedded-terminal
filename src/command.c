@@ -15,11 +15,12 @@
 #include "help.h"
 #include "clear.h"
 #include "led.h"
+#include "IO.h"
 
 #include "command.h"
 
 // #define DEBUG // Use to print out the results of command extract etc
-#define NUM_CMDS 3
+#define NUM_CMDS 4
 
 #define MAX_SPACES 2 // the maximum number of spaces in a row in a command
 #define ARG_SIZE 10 // the maximum length of an argument in chars
@@ -27,7 +28,7 @@
 CMDs_t *cmd_init(void) {
     CMDs_t *p_commands = calloc(1, sizeof(CMDs_t));
 
-    // inilise the commands
+    // initialise the commands
     CMD_t help = {
         .name = "help",
         .command = help_entry
@@ -43,10 +44,16 @@ CMDs_t *cmd_init(void) {
         .command = led_entry
     };
 
+    CMD_t IO = {
+        .name = "IO",
+        .command = IO_entry
+    };
+
     p_commands->list = calloc(NUM_CMDS, sizeof(CMD_t));
     p_commands->list[0] = help;
     p_commands->list[1] = clear;
     p_commands->list[2] = led;
+    p_commands->list[3] = IO;
 
     p_commands->length = NUM_CMDS;
 
