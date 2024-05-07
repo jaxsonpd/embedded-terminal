@@ -28,7 +28,7 @@ static char getc_stdio(FILE *stream);
 
 
 void UART_init (uint16_t baud) {
-    // initalise the baudrate
+    // set the baudrate
     unsigned long ubrr = (((F_CPU) + 8UL * (baud)) / (16UL * (baud))) - 1UL;
 
     UBRR0L = (uint8_t)(ubrr & 0xFF);
@@ -36,6 +36,9 @@ void UART_init (uint16_t baud) {
 
     // enable the uart pins
     UCSR0B |= (1 << RXEN0) | (1 << TXEN0);    
+
+    // Set operation 8 data 1 stop 0 parity
+    UCSR0C = (3 << UCSZ00);
 }
 
 

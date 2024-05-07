@@ -85,7 +85,6 @@ uint16_t cmd_extract(char *s_input, uint16_t argc_max, char* argv[]) {
     argv[0] = (char *)calloc(ARG_SIZE, sizeof(char));
 
     for (uint16_t i = 0; i < strlen(s_input); i++) {
-        printf("%c\n", s_input[i]);
 
         if (s_input[i] == '\n') { // end of command
             return arg_number+1;

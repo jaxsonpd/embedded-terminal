@@ -17,9 +17,9 @@
 
 
 uint8_t help_entry(uint16_t argc, char **argv) {
-    printf("Embedded Terminal version 0.1\n\n");
+    printf("Embedded Terminal version 0.1\r\n");
 
-    printf("Use info embeddedTerminal for more infomation about this shell\n");
+    printf("Use info embeddedTerminal for more infomation about this shell\r\n");
     printf("Commands marked with * are not implemented in this system\n");
     printf("The following commands are available for the system:\n\n");
     
