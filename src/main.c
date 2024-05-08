@@ -40,13 +40,13 @@ void print_prompt (void) {
  * 
  */
 void print_welcome (void) {
-    printf("**************************\n");
+    printf("**************************\r\n");
 
-    printf("Embedded Terminal v0.1\n");    
-    printf("Created by: Jack Duignan\n");
-    printf("Max input size: 64 chars, Use help for more info\n");
+    printf("Embedded Terminal v0.1\r\n");    
+    printf("Created by: Jack Duignan\r\n");
+    printf("Max input size: 64 chars, Use help for more info\r\n");
 
-    printf("**************************\n");
+    printf("**************************\r\n");
 
 }
 
@@ -75,15 +75,14 @@ int main (void) {
     while (1) {
         // print_prompt();
 
+
         uint16_t c_maxInputSize = 64;
         char *input = (char *)calloc(c_maxInputSize, sizeof(char));
-
         utils_get_line_echo ("AVR:~$", input, c_maxInputSize);
 
+
         uint16_t c_argc_max = 64;
-
         char** argv = (char **)calloc(c_argc_max, sizeof(char *));
-
         uint8_t argc = cmd_extract(input, c_argc_max, argv);
 
         // printf("Args (%d): \n", argc);

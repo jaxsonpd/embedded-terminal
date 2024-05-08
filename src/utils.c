@@ -57,7 +57,7 @@ uint8_t utils_get_line_echo (char *prmpt, char *buffer, size_t buffSize) {
 
     if (((c == '\n') || (c == '\r')) && (index < buffSize - 1)) {
         buffer[index++] = '\n';
-        printf("\n");
+        printf("\r\n");
     }
 
     buffer[index] = '\0';

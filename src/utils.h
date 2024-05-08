@@ -26,7 +26,8 @@ uint8_t utils_get_line (char *prmpt, char *buffer, size_t buffSize);
 
 
 /** 
- * @brief read a line from stdin but echo each character back
+ * @brief read a line from stdin but echo each character back if a \n or \r 
+ *        is recived it is put into the input string as \n and \n\r is printed
  * @param prmpt the prompt to place before the input
  * @param buffer the char buffer to place the input into
  * @param bufSize the max buffer size

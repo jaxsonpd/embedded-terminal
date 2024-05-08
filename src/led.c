@@ -37,10 +37,10 @@ uint8_t led_entry(uint16_t argc, char **argv) {
     }
 
     if (strcmp(argv[1], "on") == 0) {
-        printf("LED on\n");  
+        printf("LED on\r\n");  
         PORTB |= 1 << PORTB5; // set pin high
     } else {
-        printf("LED off\n");
+        printf("LED off\r\n");
         PORTB &= ~(1 << PORTB5); // set pin low
     }
 
