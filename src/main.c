@@ -22,17 +22,9 @@
 
 
 #define BAUD_RATE 57600
+#define DEBUG
 
 CMDs_t *p_commands;
-
-/** 
- * @brief Print a prompt to the screen
- * 
- */
-void print_prompt (void) {
-    char p_prompt[3] = "$>";
-    printf(p_prompt);
-}
 
 
 /** 
@@ -85,11 +77,14 @@ int main (void) {
         char** argv = (char **)calloc(c_argc_max, sizeof(char *));
         uint8_t argc = cmd_extract(input, c_argc_max, argv);
 
-        // printf("Args (%d): \n", argc);
+#ifdef DEBUG
+        printf("Input: %s\r\n", input);
+        printf("Args (%d): \r\n", argc);
 
-        // for (int i = 0; i < argc; i++) {
-        //     printf("%d: %s\n", i, argv[i]);
-        // }
+        for (int i = 0; i < argc; i++) {
+            printf("%d: %s\r\n", i, argv[i]);
+        }
+#endif // DEBUG
 
         if (argc) {
             cmd_execute(*p_commands, argc, argv);
