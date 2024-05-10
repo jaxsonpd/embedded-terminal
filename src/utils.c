@@ -91,7 +91,7 @@ int16_t getopt (int argc, char* argv[], char *optstring) {
 
     char* opt = argv[optind];
 
-    printf("opt: %s\n", opt);
+    printf("opt: %s\r\n", opt);
 
     // Check to see if opt should be processed
     if (optind >= argc) {

@@ -41,16 +41,16 @@ int32_t IO_entry(uint16_t argc, char *argv[]) {
                 h_flag = 1;
                 break;
             default: // ? or :
-                fprintf(stderr, "Usage %s [-p pin] [-s output] [-r] [-h]\n", argv[0]);
+                fprintf(stderr, "Usage %s [-p pin] [-s output] [-r] [-h]\r\n", argv[0]);
                 return EXIT_FAILURE;
                 break;
         }
     }
 
-    printf("p: %1d, s: %1d, r: %1d, h: %1d\n", p_flag, s_flag, r_flag, h_flag);
+    printf("p: %1d, s: %1d, r: %1d, h: %1d\r\n", p_flag, s_flag, r_flag, h_flag);
 
     if ((p_flag) & (!s_flag & !r_flag)) { // Require the other arguments
-        printf("-p requires ether -s or -r\n");
+        printf("-p requires ether -s or -r\r\n");
         return EXIT_FAILURE;
     }
     
