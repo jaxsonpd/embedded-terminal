@@ -19,7 +19,7 @@
  * 
  * @return 0 if successful
  */
-uint8_t led_entry(uint16_t argc, char **argv);
+int32_t led_entry(uint16_t argc, char **argv);
 
 
 

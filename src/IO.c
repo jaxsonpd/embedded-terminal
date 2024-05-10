@@ -18,7 +18,7 @@
 const char *g_usage = ":p:s:rh";
 
 
-uint8_t IO_entry(uint16_t argc, char *argv[]) {
+int32_t IO_entry(uint16_t argc, char *argv[]) {
     int16_t opt;
     bool s_flag = false, r_flag = false, p_flag = false, h_flag = false;
 

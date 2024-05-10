@@ -21,7 +21,7 @@
  * 
  * @return 0 for successes
  */
-uint8_t IO_entry(uint16_t argc, char *argv[]);
+int32_t IO_entry(uint16_t argc, char *argv[]);
 
 
 
