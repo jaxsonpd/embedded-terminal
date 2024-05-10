@@ -51,12 +51,14 @@ uint8_t utils_get_line_echo (char *prmpt, char *buffer, size_t buffSize) {
 
     // Get input
     while (((c = fgetc(stdin)) != EOF) && (c != '\n') && (c != '\r') && (index < buffSize - 1)) {
-        if (c == 0x08) { // Backspace
-            buffer[index--] = '\0';
+        if ((c == 0x7F) || (c == 0x08)) { // Backspace
+            index--;
+            printf("%c", 0x7F);
         } else {
             buffer[index++] = (char)c;   
+            printf("%c", c);
         }
-        printf("%c", c);
+        
     }
 
     if (((c == '\n') || (c == '\r')) && (index < buffSize - 1)) {
