@@ -130,7 +130,7 @@ int16_t getopt (int argc, char* argv[], char *optstring) {
             return opt[1];
         } else {
             optind++;
-            optopt = opt;
+            optopt = opt[0];
 
             return ':';
         }

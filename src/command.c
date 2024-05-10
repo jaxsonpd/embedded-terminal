@@ -73,6 +73,8 @@ uint8_t cmd_execute(CMDs_t commands, uint16_t argc, char **argv) {
             return commands.list[i].command(argc, argv);
         }
     }
+
+    return 0;
 }
 
 uint16_t cmd_extract(char *s_input, uint16_t argc_max, char* argv[]) {

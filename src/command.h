@@ -59,6 +59,8 @@ CMDs_t *cmd_init(void);
  * @param commands an array of commands that are available
  * @param argc the number of arguments passed to the command
  * @param argv the array of arguments
+ * 
+ * @return the result of running the application 0 is a success -1 is no command found
  */
 uint8_t cmd_execute(CMDs_t commands, uint16_t argc, char **argv);
 

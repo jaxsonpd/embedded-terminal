@@ -17,7 +17,7 @@
 #include "UART.h"
 
 static int putc_stdio(char c, FILE *stream);
-static char getc_stdio(FILE *stream);
+static int getc_stdio(FILE *stream);
 
 #define F_CPU 16000000UL
 
@@ -73,7 +73,7 @@ static int putc_stdio(char c, FILE *stream) {
  * 
  * @return the char read
  */
-static char getc_stdio(FILE *stream) {
+static int getc_stdio(FILE *stream) {
     // Wait until buffer is full
     while(!(UCSR0A & (1 << RXC0)));
 
