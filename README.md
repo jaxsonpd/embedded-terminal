@@ -27,8 +27,8 @@ make flash serial
 | Setting | Value |
 | ------ | --------- |
 | EOL sent | `\n` |
-| EOL reciving | `\n` |
-| Baud Rate | `9600` |
+| EOL reciving | `\r\n` |
+| Baud Rate | `56700` |
 | Encoding | `8n1` |
 
 ### Installation
