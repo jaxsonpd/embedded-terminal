@@ -100,12 +100,13 @@ int16_t getopt (int argc, char* argv[], char *optstring) {
     }
 
     if (opt[0] == '-') { // it is an option
-        for (uint16_t i = 0; i <= strlen(optstring); i++) {
-            if (optstring[i] == opt[1]) {
+        for (uint16_t i = 0; i < strlen(optstring); i++) {
+            if ((optstring[i] == opt[1]) && (i < optstring-1)) {
                 if (optstring[i+1] == ':') {
-                    if (optstring[i+2] == ':') reqargopt = true;
+                    if ((optstring[i+2] == ':') && (i < optstring-2)) reqargopt = true;
                     else reqarg = true;
                 }
+
                 isopt = true;
                 break;
             }
