@@ -27,9 +27,11 @@ int32_t IO_entry(uint16_t argc, char *argv[]) {
 
 
     while ((opt = getopt(argc, argv, g_usage)) != -1) {
+        printf("result: %c\r\n", (char)opt);
         switch (opt) {
             case 'p':
                 p_flag = 1;
+                printf("Arg: %s\r\n", optarg);
                 break;
             case 's': // Set mode
                 s_flag = 1;
@@ -40,6 +42,8 @@ int32_t IO_entry(uint16_t argc, char *argv[]) {
             case 'h':
                 h_flag = 1;
                 break;
+            case ':':
+                printf("%c missing required argument\r\n", optopt);
             default: // ? or :
                 fprintf(stderr, "Usage %s [-p pin] [-s output] [-r] [-h]\r\n", argv[0]);
                 return EXIT_FAILURE;
