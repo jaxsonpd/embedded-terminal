@@ -62,7 +62,7 @@ CMDs_t *cmd_init(void);
  * 
  * @return the result of running the application 0 is a success -1 is no command found
  */
-uint8_t cmd_execute(CMDs_t commands, uint16_t argc, char **argv);
+uint8_t cmd_execute(CMDs_t commands, uint8_t argc, char **argv);
 
 
 /** 
@@ -74,7 +74,7 @@ uint8_t cmd_execute(CMDs_t commands, uint16_t argc, char **argv);
  * 
  * @return the resulting length of argv
  */
-uint16_t cmd_extract(char *s_input, uint16_t argc_max, char* argv[]);
+uint16_t cmd_extract(char *s_input, uint8_t argc_max, char* argv[]);
 
 
 /** 

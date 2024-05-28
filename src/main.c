@@ -46,7 +46,7 @@ void print_welcome (void) {
 /** 
  * @brief Setup for the embedded terminal
  * 
- * @return 1 if successful 0 otherwise
+ * @return 0 if successful 1 otherwise
  */
 bool setup (void) {
     // initialise communications
@@ -56,7 +56,25 @@ bool setup (void) {
 
     p_commands = cmd_init();
 
-    return true;
+    return false;
+} 
+
+
+/** 
+ * @brief Free the memory used to store the argument array
+ * @param argv the argument array
+ * @param argc the number of arguments in the array 
+ *
+ * @return 0 if successful 
+ */
+bool free_argv(char* argv[], int8_t argc) {
+    for (uint8_t i = 0; i < argc; i++) {
+        free(argv[i]);
+    }
+
+    free(argv);
+    
+    return argv;
 } 
 
 
@@ -73,7 +91,7 @@ int main (void) {
         utils_get_line_echo ("AVR:~$", input, c_maxInputSize);
 
 
-        uint16_t c_argc_max = 64;
+        uint8_t c_argc_max = 64;
         char** argv = (char **)calloc(c_argc_max, sizeof(char *));
         uint8_t argc = cmd_extract(input, c_argc_max, argv);
 
@@ -81,7 +99,7 @@ int main (void) {
         printf("Input: %s\r\n", input);
         printf("Args (%d): \r\n", argc);
 
-        for (int i = 0; i < argc; i++) {
+        for (uint8_t i = 0; i < argc; i++) {
             printf("%d: %s\r\n", i, argv[i]);
         }
 #endif // DEBUG
@@ -89,12 +107,10 @@ int main (void) {
         if (argc) {
             cmd_execute(*p_commands, argc, argv);
         }
-
-        for (int i = 0; i < argc; i++) {
-            free(argv[i]);
-        }
-
-        free (argv);
+        
+        if (free_argv(argv, argc)) { 
+            fprintf(stderr, "Free Error: argv could not be freed may be over writen\r\n");
+        } 
     }
 
 }

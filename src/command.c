@@ -61,7 +61,7 @@ CMDs_t *cmd_init(void) {
 }
 
 
-uint8_t cmd_execute(CMDs_t commands, uint16_t argc, char **argv) {
+uint8_t cmd_execute(CMDs_t commands, uint8_t argc, char **argv) {
     for (uint8_t i=0; i < commands.length; i++) {
 #ifdef DEBUG
         printf("Checking %s\n", commands.list[i].name);
@@ -77,7 +77,7 @@ uint8_t cmd_execute(CMDs_t commands, uint16_t argc, char **argv) {
     return 0;
 }
 
-uint16_t cmd_extract(char *s_input, uint16_t argc_max, char* argv[]) {
+uint16_t cmd_extract(char *s_input, uint8_t argc_max, char* argv[]) {
     bool first_space = true;
     bool new_arg = false;
     uint16_t arg_number = 0;
