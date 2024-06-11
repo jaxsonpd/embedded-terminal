@@ -79,6 +79,6 @@ avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyUSB0 -b 115200 -U flash:w:proj
 
 Sometimes the device can be at other bus locations including ttyACM* the correct location can be found using:
 
-'''
+```
 ls -l /dev/ttyUSB* /dev/ttyACM*
-'''
+```

@@ -15,7 +15,7 @@
 
 void GPIO_pin_init(uint16_t pin, pinType_t type) {
     // Set the DDR and PORT to match the type
-    volatile uint8_t *DDR_pin = PINBANK(pin) - 1; // DDRX is one regs lower then PORTX 
+    volatile uint8_t *DDR_pin = (uint8_t *) PINBANK(pin) - 1; // DDRX is one regs lower then PORTX 
     
     if (type == OUTPUT) {
         *DDR_pin |= (1 << PINNUM(pin));

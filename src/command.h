@@ -25,7 +25,7 @@
  */
 typedef struct {
     char *name; 
-    uint8_t (*command)(uint16_t argc, char **argv); 
+    int32_t (*command)(uint16_t argc, char **argv); 
 } CMD_t;
 
 
