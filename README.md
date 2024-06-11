@@ -2,26 +2,32 @@
 
 This is a terminal designed to run on the avr series of micro controller which offers some basic functions.
 
-# Documentation
-## Commands
+A screenshot of the welcome message can be seen below:
+
+![The embedded terminal welcome](./screenshots/Embedded-Terminal-Welcome.png)
+
+## Documentation
+
+### Commands
 
 `help`: View the available commands and get general information about the system.
 
 `clear`: Clear the terminal screen using the VT100 escape sequence.
 
-`led`: Toggle an lead connected to a spesific pin (in this case pin 13 on the arduino uno)
- 
-# Setup
+`led`: Toggle an lead connected to a specific pin (in this case pin 13 on the arduino uno)
+
+## Setup
 
 A full installation and setup process can be found in SETUP.md
 
 But assuming the target device is ATMEL Mega328P (Arduino Uno) then the device can be programmed using:
 
-```
+```bash
 make flash serial
 ```
 
-## Monitoring the Serial Port
+in the `./src/` directory.
+
 ### Serial monitor settings
 
 | Setting | Value |
@@ -31,10 +37,8 @@ make flash serial
 | Baud Rate | `56700` |
 | Encoding | `8n1` |
 
-### Installation
 To interact with the terminal use a serial monitor. The author recommends using putty which can be installed using:
-```
+
+```bash
 sudo apt install putty
 ```
-
-
