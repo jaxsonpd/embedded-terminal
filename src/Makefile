@@ -4,19 +4,55 @@
 # #date 2024-06-11
 # @brief the make file for the embedded-terminal project
 
+# User params
 USBDEVICE = /dev/ttyUSB0
+TARGET = main
 
-CC = avr-gcc
+# Flags
 CFLAGS = -Os -DF_CPU=16000000UL -mmcu=atmega328p -Wall -Wstrict-prototypes -Wextra
+MCU = -mmcu=atmega328p
 
+# Commands
+CC = avr-gcc
 OBJCOPY = avr-objcopy
 SIZE = avr-size
 DEL = rm
+MKDIR_P = mkdir -p
 
+# Locations
 SRCDIR = .
-LIBDIR = ../lib
 BUILDDIR = $(SRCDIR)/build
 
-_DEPS 
+# Use all c files in directory
+SRCS := $(shell find $(SRCDIR) -name '*.cpp' -or -name '*.c' -or -name '*.s')
+OBJS := $(SRCS:%=$(BUILDDIR)/%.o)
+
+all: $(TARGET).out
+
+# Create out file
+$(BUILDDIR)/$(TARGET).out: $(OBJS)
+	$(CC) $(OBJS) $(MCU) -o $@
+
+# Create object files
+$(BUILDDIR)/%.c.o: %.c
+	$(MKDIR_P) $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@ 
+
+# Flash to the MCC
+.PHONY: flash
+flash: $(BUILDDIR)/$(TARGET).out
+	$(OBJCOPY) -O ihex -R .eeprom $(BUILDDIR)/$(TARGET).out $(BUILDDIR)/$(TARGET).hex
+	avrdude -F -V -c arduino -p ATMEGA328P -P $(USBDEVICE) -b 115200 -U flash:w:$(BUILDDIR)/$(TARGET).hex
+	$(SIZE) $(BUILDDIR)/$(TARGET).hex
+
+# Launch a serial prompt
+.PHONY: serial
+serial: 
+	putty -serial $(USBDEVICE) -sercfg 8,'2',57600,'n' -fn "Monospace 13"
+
+# Clean
+.PHONY: clean
+clean:
+	$(DEL) -rf $(BUILDDIR)
 
 # https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
