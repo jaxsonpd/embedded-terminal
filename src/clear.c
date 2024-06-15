@@ -10,7 +10,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "include/UART.h"
+#include "lib/UART.h"
 
 #include "clear.h"
 

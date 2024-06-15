@@ -14,11 +14,11 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#include "include/UART.h"
-#include "include/GPIO.h"
+#include "lib/UART.h"
+#include "lib/GPIO.h"
 
-#include "utils.h"
-#include "command.h"
+#include "include/utils.h"
+#include "include/command.h"
 
 
 #define BAUD_RATE 57600

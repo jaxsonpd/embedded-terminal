@@ -20,7 +20,7 @@ DEL = rm
 MKDIR_P = mkdir -p
 
 # Locations
-SRCDIR = .
+SRCDIR = ./src
 BUILDDIR = $(SRCDIR)/build
 
 # Use all c files in directory
@@ -34,7 +34,7 @@ $(BUILDDIR)/$(TARGET).out: $(OBJS)
 	$(CC) $(OBJS) $(MCU) -o $@
 
 # Create object files
-$(BUILDDIR)/%.c.o: %.c
+$(BUILDDIR)/%.c.o: $(SRCDIR)/%.c
 	$(MKDIR_P) $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@ 
 

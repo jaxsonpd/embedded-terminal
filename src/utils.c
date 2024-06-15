@@ -12,7 +12,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "utils.h"
+#include "include/utils.h"
 
 
 uint8_t utils_get_line (char *prmpt, char *buffer, size_t buffSize) {
