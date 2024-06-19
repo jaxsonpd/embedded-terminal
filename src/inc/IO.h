@@ -13,6 +13,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "utils.h"
+
 
 /** 
  * @brief The entry point into the IO module
@@ -21,7 +23,7 @@
  * 
  * @return 0 for successes
  */
-int32_t IO_entry(uint16_t argc, char *argv[]);
+int32_t IO_entry(uint16_t UNUSED(argc), char *UNUSED(argv[]));
 
 
 

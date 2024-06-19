@@ -13,6 +13,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "utils.h"
+
 /** 
  * @struct CMD_t
  *  A structure used for storing a command
@@ -74,7 +76,7 @@ uint8_t cmd_execute(CMDs_t commands, uint8_t argc, char **argv);
  * 
  * @return the resulting length of argv
  */
-uint16_t cmd_extract(char *s_input, uint8_t argc_max, char* argv[]);
+uint16_t cmd_extract(char *s_input, uint8_t UNUSED(argc_max), char* argv[]);
 
 
 /** 
@@ -84,7 +86,7 @@ uint16_t cmd_extract(char *s_input, uint8_t argc_max, char* argv[]);
  * 
  * @return 1 if executable 0 otherwise
  */
-bool cmd_check_input(char *cmd);
+bool cmd_check_input(char *UNUSED(cmd));
 
 
 /** 

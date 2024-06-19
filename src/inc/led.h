@@ -13,13 +13,15 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "utils.h"
+
 /** 
  * @brief The entry point for the led command
  * @param args the argument string
  * 
  * @return 0 if successful
  */
-int32_t led_entry(uint16_t argc, char **argv);
+int32_t led_entry(uint16_t UNUSED(argc), char **UNUSED(argv));
 
 
 
