@@ -4,7 +4,7 @@ This is a terminal designed to run on the avr series of micro controller which o
 
 A screenshot of the welcome message can be seen below:
 
-![The embedded terminal welcome](./screenshots/Embedded-Terminal-Welcome.png)
+![The embedded terminal welcome](./doc/screenshots/Embedded-Terminal-Welcome.png)
 
 ## Documentation
 
@@ -15,6 +15,23 @@ A screenshot of the welcome message can be seen below:
 `clear`: Clear the terminal screen using the VT100 escape sequence.
 
 `led`: Toggle an lead connected to a specific pin (in this case pin 13 on the arduino uno)
+
+## ToDo
+### Admin
+- [ ] Build script for libraries
+- [ ] Build script for source
+- [ ] Build script for project
+
+### Features
+- [ ] I2C library
+- [ ] Add display module
+- [ ] Finish IO module
+- [ ] Add EEPROM module
+- [ ] Add pipeing operator
+
+### Bug Fix
+- [ ] Fix `getopt()`
+- [ ] Fix argument memory leak
 
 ## Setup
 
