@@ -30,7 +30,7 @@ OBJS := $(SRCS:%=$(BUILDDIR)/%.o)
 all: $(TARGET).out
 
 # Create out file
-$(BUILDDIR)/$(TARGET).out: $(OBJS)
+$(TARGET).out: $(OBJS)
 	$(CC) $(OBJS) $(MCU) -o $@
 
 # Create object files
