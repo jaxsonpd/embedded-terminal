@@ -14,7 +14,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#include "UART.h"
+#include "../UART.h"
 
 static int putc_stdio(char c, FILE *stream);
 static int getc_stdio(FILE *stream);

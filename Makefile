@@ -4,6 +4,8 @@
 # #date 2024-06-11
 # @brief the make file for the embedded-terminal project
 
+# https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
+
 # User params
 USBDEVICE = /dev/ttyUSB0
 TARGET = main
@@ -21,21 +23,21 @@ MKDIR_P = mkdir -p
 
 # Locations
 SRCDIR = ./src
-BUILDDIR = $(SRCDIR)/build
+BUILDDIR = ./build
 
 # Use all c files in directory
-SRCS := $(shell find $(SRCDIR) -name '*.cpp' -or -name '*.c' -or -name '*.s')
+SRCS := $(shell cd $(SRCDIR) && find * -name '*.cpp' -or -name '*.c' -or -name '*.s')
 OBJS := $(SRCS:%=$(BUILDDIR)/%.o)
 
-all: $(TARGET).out
+all: $(BUILDDIR)/$(TARGET).out
 
 # Create out file
-$(TARGET).out: $(OBJS)
+$(BUILDDIR)/$(TARGET).out: $(OBJS)
 	$(CC) $(OBJS) $(MCU) -o $@
 
 # Create object files
 $(BUILDDIR)/%.c.o: $(SRCDIR)/%.c
-	$(MKDIR_P) $(dir $@)
+	@$(MKDIR_P) $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@ 
 
 # Flash to the MCC
@@ -54,5 +56,3 @@ serial:
 .PHONY: clean
 clean:
 	$(DEL) -rf $(BUILDDIR)
-
-# https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/

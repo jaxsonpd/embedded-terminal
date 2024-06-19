@@ -11,7 +11,7 @@
 
 #include <avr/io.h>
 
-#include "GPIO.h"
+#include "../GPIO.h"
 
 void GPIO_pin_init(uint16_t pin, pinType_t type) {
     // Set the DDR and PORT to match the type

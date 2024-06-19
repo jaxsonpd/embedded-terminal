@@ -17,8 +17,8 @@
 #include "lib/UART.h"
 #include "lib/GPIO.h"
 
-#include "include/utils.h"
-#include "include/command.h"
+#include "inc/utils.h"
+#include "inc/command.h"
 
 
 #define BAUD_RATE 57600

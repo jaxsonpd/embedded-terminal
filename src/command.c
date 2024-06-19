@@ -12,12 +12,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "include/help.h"
-#include "include/clear.h"
-#include "include/led.h"
-#include "include/IO.h"
+#include "inc/help.h"
+#include "inc/clear.h"
+#include "inc/led.h"
+#include "inc/IO.h"
 
-#include "include/command.h"
+#include "inc/command.h"
 
 // #define DEBUG // Use to print out the results of command extract etc
 #define NUM_CMDS 4

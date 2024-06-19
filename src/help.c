@@ -10,7 +10,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "include/help.h"
+#include "inc/help.h"
 
 
 
