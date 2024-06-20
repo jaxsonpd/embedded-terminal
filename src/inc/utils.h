@@ -91,7 +91,7 @@ extern char optopt;
  * @return successively each option character and -1 at end, '?' is returned when an option is not recognised and ':' 
  * returned when a required argument is not provided
  */
-int16_t getopt (int argc, char* argv[], char *optstring);
+int16_t getopt (int argc, char* argv[], const char *optstring);
 
 
 
