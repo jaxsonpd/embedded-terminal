@@ -31,7 +31,7 @@ static bool init(void) {
     return true;
 }
 
-int32_t led_entry(uint16_t argc, char **argv) {
+int32_t led_entry(uint16_t UNUSED(argc), char *argv[]) {
     if (!init()) {
         printf("LED init failed please check configuration.\n");
     }

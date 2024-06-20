@@ -21,7 +21,7 @@
  * 
  * @return 0 if successful
  */
-int32_t led_entry(uint16_t UNUSED(argc), char **UNUSED(argv));
+int32_t led_entry(uint16_t argc, char *argv[]);
 
 
 

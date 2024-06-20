@@ -23,7 +23,7 @@
  * 
  * @return the result of excuting the command
  */
-int32_t clear_entry(uint16_t UNUSED(argc), char **UNUSED(argv));
+int32_t clear_entry(uint16_t argc, char *argv[]);
 
 
 #endif // CLEAR_H

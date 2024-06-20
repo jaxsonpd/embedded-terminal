@@ -16,6 +16,8 @@
 
 #include "../UART.h"
 
+#include "../../inc/utils.h"
+
 static int putc_stdio(char c, FILE *stream);
 static int getc_stdio(FILE *stream);
 
@@ -46,7 +48,7 @@ void UART_init_stdio (uint16_t baud) {
     UART_init(baud);
 
     // Assign in/out functions to stdio
-    FILE *stream = fdevopen(putc_stdio, getc_stdio);
+    FILE *UNUSED(stream) = fdevopen(putc_stdio, getc_stdio);
 }
 
 /** 
@@ -56,7 +58,7 @@ void UART_init_stdio (uint16_t baud) {
  * 
  * @return 0 if succesfull
  */
-static int putc_stdio(char c, FILE *stream) {
+static int putc_stdio(char c, FILE *UNUSED(stream)) {
     // wait for transmit buffer to be empty
     while(!(UCSR0A & (1 << UDRE0)));
 
@@ -73,7 +75,7 @@ static int putc_stdio(char c, FILE *stream) {
  * 
  * @return the char read
  */
-static int getc_stdio(FILE *stream) {
+static int getc_stdio(FILE *UNUSED(stream)) {
     // Wait until buffer is full
     while(!(UCSR0A & (1 << RXC0)));
 

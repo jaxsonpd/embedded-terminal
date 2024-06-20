@@ -23,7 +23,7 @@
  * 
  * @return 0 for successes
  */
-int32_t IO_entry(uint16_t UNUSED(argc), char *UNUSED(argv[]));
+int32_t IO_entry(uint16_t argc, char *argv[]);
 
 
 

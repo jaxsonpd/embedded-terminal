@@ -21,7 +21,7 @@
  * 
  * @return the status of the command
  */
-int32_t help_entry(uint16_t UNUSED(argc), char **UNUSED(argv));
+int32_t help_entry(uint16_t argc, char *argv[]);
 
 
 #endif // HELP_H

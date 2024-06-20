@@ -77,7 +77,7 @@ uint8_t cmd_execute(CMDs_t commands, uint8_t argc, char **argv) {
     return 0;
 }
 
-uint16_t cmd_extract(char *s_input, uint8_t argc_max, char* argv[]) {
+uint16_t cmd_extract(char *s_input, uint8_t UNUSED(argmax), char* argv[]) {
     bool first_space = true;
     bool new_arg = false;
     uint16_t arg_number = 0;
@@ -127,7 +127,7 @@ uint16_t cmd_extract(char *s_input, uint8_t argc_max, char* argv[]) {
 
 
 
-bool cmd_check_input(char *cmd) {
+bool cmd_check_input(char *UNUSED(cmd)) {
 
     return 1;
 }

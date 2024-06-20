@@ -15,7 +15,7 @@
 
 
 
-int32_t help_entry(uint16_t argc, char **argv) {
+int32_t help_entry(uint16_t UNUSED(argc), char *UNUSED(argv[])) {
     printf("Embedded Terminal version 0.1\r\n");
 
     printf("Use info embeddedTerminal for more infomation about this shell\r\n");
