@@ -64,17 +64,15 @@ bool setup (void) {
  * @brief Free the memory used to store the argument array
  * @param argv the argument array
  * @param argc the number of arguments in the array 
- *
- * @return 0 if successful 
  */
-bool free_argv(char* argv[], int8_t argc) {
-    for (uint8_t i = 0; i < argc; i++) {
+void free_argv(char* argv[], int8_t argc) {
+    free(argv[0]);
+
+    for (uint8_t i = 1; i < argc; i++) {
         free(argv[i]);
     }
 
     free(argv);
-    
-    return argv;
 } 
 
 
@@ -83,9 +81,6 @@ int main (void) {
     setup();
 
     while (1) {
-        // print_prompt();
-
-
         uint16_t c_maxInputSize = 64;
         char *input = (char *)calloc(c_maxInputSize, sizeof(char));
         utils_get_line_echo ("AVR:~$", input, c_maxInputSize);
@@ -108,9 +103,8 @@ int main (void) {
             cmd_execute(*p_commands, argc, argv);
         }
         
-        if (free_argv(argv, argc)) { 
-            fprintf(stderr, "Free Error: argv could not be freed may be over writen\r\n");
-        } 
-    }
+        free (input);
 
+        free_argv(argv, argc);
+    }
 }

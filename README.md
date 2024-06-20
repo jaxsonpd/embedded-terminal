@@ -17,12 +17,15 @@ A screenshot of the welcome message can be seen below:
 `led`: Toggle an lead connected to a specific pin (in this case pin 13 on the arduino uno)
 
 ## ToDo
+
 ### Admin
-- [ ] Build script for libraries
-- [ ] Build script for source
-- [ ] Build script for project
+
+- [x] Build script for libraries
+- [x] Build script for source
+- [x] Build script for project
 
 ### Features
+
 - [ ] I2C library
 - [ ] Add display module
 - [ ] Finish IO module
@@ -30,12 +33,14 @@ A screenshot of the welcome message can be seen below:
 - [ ] Add pipeing operator
 
 ### Bug Fix
-- [ ] Fix `getopt()`
-- [ ] Fix argument memory leak
+
+- [x] Fix `getopt()`
+- [x] Fix argument memory leak - This is caused by not freeing the input array.
+- [ ] Re write the cmd extract function to be more clear.
 
 ## Setup
 
-A full installation and setup process can be found in SETUP.md
+A full installation and setup process can be found in [SETUP](./SETUP.md)
 
 But assuming the target device is ATMEL Mega328P (Arduino Uno) then the device can be programmed using:
 
