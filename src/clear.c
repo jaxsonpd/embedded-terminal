@@ -10,13 +10,13 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "include/UART.h"
+#include "lib/UART.h"
 
-#include "clear.h"
+#include "inc/clear.h"
 
 #define TERM_CLEAR "\033[2J\033[H\033[3J" // The VT100 clear screen command
 
-int32_t clear_entry(uint16_t argc, char **argv) {
+int32_t clear_entry(uint16_t UNUSED(argc), char *UNUSED(argv[])) {
     printf(TERM_CLEAR);
 
     return 0;

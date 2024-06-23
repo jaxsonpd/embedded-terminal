@@ -13,13 +13,15 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "utils.h"
+
 /** 
  * @brief Exucte the help command with the given arguments
  * @param args the array of args
  * 
  * @return the status of the command
  */
-int32_t help_entry(uint16_t argc, char **argv);
+int32_t help_entry(uint16_t argc, char *argv[]);
 
 
 #endif // HELP_H

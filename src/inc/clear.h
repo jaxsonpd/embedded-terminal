@@ -13,6 +13,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "utils.h"
+
 /** 
  * @brief The entry point for the clear screen command which 
  * 
@@ -21,7 +23,7 @@
  * 
  * @return the result of excuting the command
  */
-int32_t clear_entry(uint16_t argc, char **argv);
+int32_t clear_entry(uint16_t argc, char *argv[]);
 
 
 #endif // CLEAR_H

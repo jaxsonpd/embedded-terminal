@@ -13,6 +13,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "utils.h"
+
 
 /** 
  * @brief The entry point into the IO module

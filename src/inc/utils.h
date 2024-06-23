@@ -14,6 +14,34 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#ifdef __GNUC__
+/**
+ * @brief This macro is used to tell gcc that the function parameter is unused.
+ * 
+ * This can be used like so: void foo(int UNUSED(bar));
+ * This will only work on gcc and clang.
+ * 
+ * @param x the attribute that is unused
+ */
+#  define UNUSED(x) UNUSED_ ## x __attribute__((__unused__))
+#else
+#  define UNUSED(x) UNUSED_ ## x
+#endif
+
+#ifdef __GNUC__
+/**
+ * @brief This macro is used to tell gcc that the function is unused.
+ * 
+ * This can be used like so: void UNUSED_FUNCTION(foo)(int UNUSED(bar));
+ * This will only work on gcc and clang.
+ * 
+ * @param x the function that is unused
+ */
+#  define UNUSED_FUNCTION(x) __attribute__((__unused__)) UNUSED_ ## x
+#else
+#  define UNUSED_FUNCTION(x) UNUSED_ ## x
+#endif
+
 /** 
  * @brief read a line from stdin
  * @param prmpt the prompt to place at the begining
@@ -63,7 +91,7 @@ extern char optopt;
  * @return successively each option character and -1 at end, '?' is returned when an option is not recognised and ':' 
  * returned when a required argument is not provided
  */
-int16_t getopt (int argc, char* argv[], char *optstring);
+int16_t getopt (int argc, char* argv[], const char *optstring);
 
 
 

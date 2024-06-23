@@ -11,9 +11,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "utils.h"
-
-#include "IO.h"
+#include "inc/IO.h"
 
 const char *g_usage = ":p:s:rh";
 

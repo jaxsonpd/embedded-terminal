@@ -12,12 +12,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "help.h"
-#include "clear.h"
-#include "led.h"
-#include "IO.h"
+#include "inc/help.h"
+#include "inc/clear.h"
+#include "inc/led.h"
+#include "inc/IO.h"
 
-#include "command.h"
+#include "inc/command.h"
 
 // #define DEBUG // Use to print out the results of command extract etc
 #define NUM_CMDS 4
@@ -61,7 +61,7 @@ CMDs_t *cmd_init(void) {
 }
 
 
-uint8_t cmd_execute(CMDs_t commands, uint16_t argc, char **argv) {
+uint8_t cmd_execute(CMDs_t commands, uint8_t argc, char **argv) {
     for (uint8_t i=0; i < commands.length; i++) {
 #ifdef DEBUG
         printf("Checking %s\n", commands.list[i].name);
@@ -77,7 +77,7 @@ uint8_t cmd_execute(CMDs_t commands, uint16_t argc, char **argv) {
     return 0;
 }
 
-uint16_t cmd_extract(char *s_input, uint16_t argc_max, char* argv[]) {
+uint16_t cmd_extract(char *s_input, uint8_t UNUSED(argmax), char* argv[]) {
     bool first_space = true;
     bool new_arg = false;
     uint16_t arg_number = 0;
@@ -127,7 +127,7 @@ uint16_t cmd_extract(char *s_input, uint16_t argc_max, char* argv[]) {
 
 
 
-bool cmd_check_input(char *cmd) {
+bool cmd_check_input(char *UNUSED(cmd)) {
 
     return 1;
 }

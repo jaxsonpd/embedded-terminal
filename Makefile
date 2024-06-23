@@ -1,70 +1,58 @@
 ## 
 # @file Makefile
 # @author Jack Duignan (JackpDuigna@gmail.com)
-# 2024-03-30
-# @brief various functions to make the project
+# #date 2024-06-11
+# @brief the make file for the embedded-terminal project
 
-CC = avr-gcc
+# https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
+
+# User params
+USBDEVICE = /dev/ttyUSB0
+TARGET = main
+
+# Flags
 CFLAGS = -Os -DF_CPU=16000000UL -mmcu=atmega328p -Wall -Wstrict-prototypes -Wextra
+MCU = -mmcu=atmega328p
+
+# Commands
+CC = avr-gcc
 OBJCOPY = avr-objcopy
 SIZE = avr-size
 DEL = rm
-SRCDIR = src
-INCDIR = src/include
+MKDIR_P = mkdir -p
 
-USBDEVICE = /dev/ttyUSB0
+# Locations
+SRCDIR = ./src
+BUILDDIR = ./build
 
+# Use all c files in directory
+SRCS := $(shell cd $(SRCDIR) && find * -name '*.cpp' -or -name '*.c' -or -name '*.s')
+OBJS := $(SRCS:%=$(BUILDDIR)/%.o)
 
+all: $(BUILDDIR)/$(TARGET).out
 
-# Default Target
-all: main.out
+# Create out file
+$(BUILDDIR)/$(TARGET).out: $(OBJS)
+	$(CC) $(OBJS) $(MCU) -o $@
 
-# Compile the object files
-main.o: $(SRCDIR)/main.c $(SRCDIR)/command.h $(SRCDIR)/utils.h $(INCDIR)/UART.h $(INCDIR)/GPIO.h
-	$(CC) -c $(CFLAGS) $< -o $@
-
-command.o: $(SRCDIR)/command.c $(SRCDIR)/command.h $(INCDIR)/UART.h $(SRCDIR)/IO.h
-	$(CC) -c $(CFLAGS) $< -o $@
-
-help.o: $(SRCDIR)/help.c $(SRCDIR)/help.h $(INCDIR)/UART.h
-	$(CC) -c $(CFLAGS) $< -o $@
-
-clear.o: $(SRCDIR)/clear.c $(SRCDIR)/clear.h $(INCDIR)/UART.h
-	$(CC) -c $(CFLAGS) $< -o $@
-
-led.o: $(SRCDIR)/led.c $(SRCDIR)/led.h $(INCDIR)/UART.h
-	$(CC) -c $(CFLAGS) $< -o $@
-
-IO.o: $(SRCDIR)/IO.c $(SRCDIR)/IO.h $(SRCDIR)/utils.h
-	$(CC) -c $(CFLAGS) $< -o $@
-
-utils.o: $(SRCDIR)/utils.c $(SRCDIR)/utils.h
-	$(CC) -c $(CFLAGS) $< -o $@
-
-UART.o: $(INCDIR)/UART.c $(INCDIR)/UART.h
-	$(CC) -c $(CFLAGS) $< -o $@
-
-GPIO.o: $(INCDIR)/GPIO.c $(INCDIR)/GPIO.h
-	$(CC) -c $(CFLAGS) $< -o $@
-
-main.out: main.o UART.o command.o help.o clear.o led.o GPIO.o utils.o IO.o
-	$(CC) -mmcu=atmega328p $^ -o $@
-
-
-# Clean the project
-.PHONY: clean
-clean:
-	$(DEL) *.o *.out *.hex
+# Create object files
+$(BUILDDIR)/%.c.o: $(SRCDIR)/%.c
+	@$(MKDIR_P) $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@ 
 
 # Flash to the MCC
 .PHONY: flash
-flash: main.out
-	$(OBJCOPY) -O ihex -R .eeprom main.out main.hex
-	avrdude -F -V -c arduino -p ATMEGA328P -P $(USBDEVICE) -b 115200 -U flash:w:main.hex
-	$(SIZE) main.hex
-
+flash: $(BUILDDIR)/$(TARGET).out
+	$(OBJCOPY) -O ihex -R .eeprom $(BUILDDIR)/$(TARGET).out $(BUILDDIR)/$(TARGET).hex
+	avrdude -F -V -c arduino -p ATMEGA328P -P $(USBDEVICE) -b 115200 -U flash:w:$(BUILDDIR)/$(TARGET).hex
+	$(SIZE) $(BUILDDIR)/$(TARGET).hex
 
 # Launch a serial prompt
 .PHONY: serial
 serial: 
 	putty -serial $(USBDEVICE) -sercfg 8,'2',57600,'n' -fn "Monospace 13"
+
+# Clean
+.PHONY: clean
+clean:
+	$(DEL) -rf $(BUILDDIR)

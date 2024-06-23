@@ -14,11 +14,11 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#include "include/UART.h"
-#include "include/GPIO.h"
+#include "lib/UART.h"
+#include "lib/GPIO.h"
 
-#include "utils.h"
-#include "command.h"
+#include "inc/utils.h"
+#include "inc/command.h"
 
 
 #define BAUD_RATE 57600
@@ -46,7 +46,7 @@ void print_welcome (void) {
 /** 
  * @brief Setup for the embedded terminal
  * 
- * @return 1 if successful 0 otherwise
+ * @return 0 if successful 1 otherwise
  */
 bool setup (void) {
     // initialise communications
@@ -56,7 +56,23 @@ bool setup (void) {
 
     p_commands = cmd_init();
 
-    return true;
+    return false;
+} 
+
+
+/** 
+ * @brief Free the memory used to store the argument array
+ * @param argv the argument array
+ * @param argc the number of arguments in the array 
+ */
+void free_argv(char* argv[], int8_t argc) {
+    free(argv[0]);
+
+    for (uint8_t i = 1; i < argc; i++) {
+        free(argv[i]);
+    }
+
+    free(argv);
 } 
 
 
@@ -65,15 +81,12 @@ int main (void) {
     setup();
 
     while (1) {
-        // print_prompt();
-
-
         uint16_t c_maxInputSize = 64;
         char *input = (char *)calloc(c_maxInputSize, sizeof(char));
         utils_get_line_echo ("AVR:~$", input, c_maxInputSize);
 
 
-        uint16_t c_argc_max = 64;
+        uint8_t c_argc_max = 64;
         char** argv = (char **)calloc(c_argc_max, sizeof(char *));
         uint8_t argc = cmd_extract(input, c_argc_max, argv);
 
@@ -81,7 +94,7 @@ int main (void) {
         printf("Input: %s\r\n", input);
         printf("Args (%d): \r\n", argc);
 
-        for (int i = 0; i < argc; i++) {
+        for (uint8_t i = 0; i < argc; i++) {
             printf("%d: %s\r\n", i, argv[i]);
         }
 #endif // DEBUG
@@ -89,12 +102,9 @@ int main (void) {
         if (argc) {
             cmd_execute(*p_commands, argc, argv);
         }
+        
+        free (input);
 
-        for (int i = 0; i < argc; i++) {
-            free(argv[i]);
-        }
-
-        free (argv);
+        free_argv(argv, argc);
     }
-
 }
