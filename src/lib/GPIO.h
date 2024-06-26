@@ -13,8 +13,10 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-/// Define a pin for use in the GPIO functions should be asigned to a uint16_t
+/// Define a pin for use in the GPIO functions should be assigned to a pin_t
 #define PIN(bank, num) (((bank) << 8) | (num))
+
+typedef uint16_t pin_t;
 
 /// Extract the pins number
 #define PINNUM(pin) (pin & 255) 
@@ -24,7 +26,7 @@
 
 
 /// The different types of GPIO pins
-typedef enum {
+typedef enum pin_types {
     OUTPUT,
     INPUT_NO_PULLUP,
     INPUT_PULLUP,
