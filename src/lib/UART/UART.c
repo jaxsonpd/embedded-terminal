@@ -29,7 +29,7 @@ static int getc_stdio(FILE *stream);
 // static FILE g_stdin = FDEV_SETUP_STREAM(NULL, getc_stdio, _FDEV_SETUP_READ);
 
 
-void UART_init (uint16_t baud) {
+void UART_init (uint32_t baud) {
     // set the baudrate
     unsigned long ubrr = (((F_CPU) + 8UL * (baud)) / (16UL * (baud))) - 1UL;
 
@@ -44,7 +44,7 @@ void UART_init (uint16_t baud) {
 }
 
 
-void UART_init_stdio (uint16_t baud) {
+void UART_init_stdio (uint32_t baud) {
     UART_init(baud);
 
     // Assign in/out functions to stdio

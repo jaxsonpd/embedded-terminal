@@ -19,15 +19,15 @@
  * @param ubrr the baud rate of the serial transmistions already divided by the clock
  * 
  */
-void UART_init (uint16_t baud);
+void UART_init (uint32_t baud);
 
 
 /** 
- * @brief Initalise the UART interface to use stdio
+ * @brief Initalise the UART interfaces to use stdio
  * @param baud the baud rate to initalise too
  * 
  */
-void UART_init_stdio (uint16_t baud);
+void UART_init_stdio (uint32_t baud);
 
 
 /** 
