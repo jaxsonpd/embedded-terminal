@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "lib/GPIO.h"
+#include "GPIO.h"
 
 #include "inc/IO.h"
 

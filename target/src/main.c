@@ -14,8 +14,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#include "lib/UART.h"
-#include "lib/GPIO.h"
+#include "UART.h"
+#include "GPIO.h"
 
 #include "inc/utils.h"
 #include "inc/command.h"

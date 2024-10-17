@@ -16,7 +16,33 @@
 
 #include "../UART.h"
 
-#include "../../inc/utils.h"
+#ifdef __GNUC__
+/**
+ * @brief This macro is used to tell gcc that the function parameter is unused.
+ * 
+ * This can be used like so: void foo(int UNUSED(bar));
+ * This will only work on gcc and clang.
+ * 
+ * @param x the attribute that is unused
+ */
+#  define UNUSED(x) UNUSED_ ## x __attribute__((__unused__))
+#else
+#  define UNUSED(x) UNUSED_ ## x
+#endif
+
+#ifdef __GNUC__
+/**
+ * @brief This macro is used to tell gcc that the function is unused.
+ * 
+ * This can be used like so: void UNUSED_FUNCTION(foo)(int UNUSED(bar));
+ * This will only work on gcc and clang.
+ * 
+ * @param x the function that is unused
+ */
+#  define UNUSED_FUNCTION(x) __attribute__((__unused__)) UNUSED_ ## x
+#else
+#  define UNUSED_FUNCTION(x) UNUSED_ ## x
+#endif
 
 static int putc_stdio(char c, FILE *stream);
 static int getc_stdio(FILE *stream);

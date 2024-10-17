@@ -15,7 +15,7 @@
 
 #include <avr/io.h>
 
-#include "lib/UART.h"
+#include "UART.h"
 
 #include "inc/led.h"
 
