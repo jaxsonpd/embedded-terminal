@@ -16,6 +16,14 @@ A screenshot of the welcome message can be seen below:
 
 `led`: Toggle an lead connected to a specific pin (in this case pin 13 on the arduino uno)
 
+### Testing
+
+This project uses the [unity](https://github.com/ThrowTheSwitch/Unity) test framework to allow unity testing. This is supplemented by the [FFF](https://github.com/meekrosoft/fff) Fake Function Framework used for faking where needed. The tests are located in `./tests/` and can be run using:
+
+```bash
+
+```
+
 ## ToDo
 
 ### Admin

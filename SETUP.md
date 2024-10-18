@@ -16,6 +16,7 @@ Then install avr and avr-dude:
 ```bash
 sudo apt-get install gcc-avr binutils-avr avr-libc
 sudo apt-get install avrdude
+sudo apt-get install ruby cmake
 ```
 
 ## USB passthrough for WSL
