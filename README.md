@@ -18,10 +18,18 @@ A screenshot of the welcome message can be seen below:
 
 ### Testing
 
-This project uses the [unity](https://github.com/ThrowTheSwitch/Unity) test framework to allow unity testing. This is supplemented by the [FFF](https://github.com/meekrosoft/fff) Fake Function Framework used for faking where needed. The tests are located in `./tests/` and can be run using:
+This project uses the [unity](https://github.com/ThrowTheSwitch/Unity) test framework to allow unity testing. This is supplemented by the [FFF](https://github.com/meekrosoft/fff) Fake Function Framework used for faking where needed. The tests are located in `./tests/` and use cmake for execution. It can be manually executed from the host directory using:
 
 ```bash
+cmake -B build tests
+cmake --build build --parallel
+ctest --test-dir build --output-on-error
+```
 
+Or using the provided bash script as follows:
+
+```bash
+source run_tests.sh
 ```
 
 ## ToDo
