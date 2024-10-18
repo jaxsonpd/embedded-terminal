@@ -79,6 +79,11 @@ void free_argv(char* argv[], int8_t argc) {
 int main (void) {
     // Setup
     setup();
+    
+    pin_t led = PIN(0x25, 0x05);
+    
+    GPIO_pin_init(led, OUTPUT);
+    GPIO_set_output(led, 0);
 
     while (1) {
         uint16_t c_maxInputSize = 64;

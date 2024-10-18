@@ -51,9 +51,11 @@ static void print_help(void) {
  *
  * @return 0 if successful
  */
-static uint8_t perform_digital_write(char port, char pin_num, char state) {
-    int8_t pin_int = (int8_t)(pin_num)-48;
-    int8_t state_int = (int8_t)(state)-48;
+static uint32_t perform_digital_write(char port, char pin_num, char state) {
+    uint8_t pin_int = (uint8_t)(pin_num)-48;
+    uint8_t state_int = (uint8_t)(state)-48;
+    printf("pin num: %d\n\r", pin_int);
+    printf("pin state: %d\n\r", state_int);
 
     if (port != 'B' && port != 'D' && port != 'C') {
         printf("%c is not a valid port.\r\n", port);
@@ -70,11 +72,24 @@ static uint8_t perform_digital_write(char port, char pin_num, char state) {
         return 1;
     }
 
-    pin_t pin = PIN(port, pin);
+    pin_t pin;
+
+    switch (port) {
+        case 'B':
+            pin = PIN(0x25, pin_int);
+            printf("port B\r\n");
+        case 'C':
+            pin = PIN(PORTC, pin_int);
+        case 'D':
+            pin = PIN(PORTD, pin_int);
+        default:
+            return 0;
+    }
+    pin = PIN(0x25, 0x05);
 
     GPIO_pin_init(pin, OUTPUT);
 
-    GPIO_set_output(pin, state_int);
+    GPIO_set_output(pin, 1);
 
     return 0;
 }
@@ -86,8 +101,8 @@ int32_t IO_entry(uint16_t argc, char* argv[]) {
 
     opterr = false;
 
-    char* port;
-    char state;
+    char* port = "B5";
+    char state = 0;
 
     while ((opt = getopt(argc, argv, g_usage)) != -1) {
         printf("result: %c\r\n", (char)opt);
