@@ -1,4 +1,4 @@
-/** 
+/**
  * @file utils.c
  * @author Jack Duignan (JackpDuignan@gmail.com)
  * @date 2024-04-22
@@ -15,20 +15,20 @@
 #include "inc/utils.h"
 
 
-uint8_t utils_get_line (char *prmpt, char *buffer, size_t buffSize) {
+uint8_t utils_get_line(char* prmpt, char* buffer, size_t buffSize) {
     bool extra;
     char ch;
 
     if (prmpt != NULL) {
         printf("%s", prmpt);
-        fflush (stdout); // not required
+        fflush(stdout); // not required
     }
 
-    if (fgets (buffer, buffSize, stdin) == NULL) {
+    if (fgets(buffer, buffSize, stdin) == NULL) {
         return 1;
     }
 
-    if (buffer[strlen(buffer)-1] != '\n') {
+    if (buffer[strlen(buffer) - 1] != '\n') {
         extra = false;
         while (((ch = getchar()) != '\n') && (ch != EOF))
             extra = true;
@@ -39,11 +39,11 @@ uint8_t utils_get_line (char *prmpt, char *buffer, size_t buffSize) {
 }
 
 
-uint8_t utils_get_line_echo (char *prmpt, char *buffer, size_t buffSize) {
-    
+uint8_t utils_get_line_echo(char* prmpt, char* buffer, size_t buffSize) {
+
     if (prmpt != NULL) {
         printf("%s", prmpt);
-        fflush (stdout); // not required
+        fflush(stdout); // not required
     }
 
     size_t index = 0;
@@ -55,10 +55,10 @@ uint8_t utils_get_line_echo (char *prmpt, char *buffer, size_t buffSize) {
             index--;
             printf("%c", 0x7F);
         } else {
-            buffer[index++] = (char)c;   
+            buffer[index++] = (char)c;
             printf("%c", c);
         }
-        
+
     }
 
     if (((c == '\n') || (c == '\r')) && (index < buffSize - 1)) {
@@ -72,13 +72,13 @@ uint8_t utils_get_line_echo (char *prmpt, char *buffer, size_t buffSize) {
 }
 
 /// @brief The options argument string 
-char *optarg; 
+char* optarg;
 
 /// @brief The index of the next element to be processed in argv
-int16_t optind=1;
+int16_t optind = 1;
 
 /// @brief If this is set to zero then no error messages are printed by getopt()
-int16_t opterr=1;
+int16_t opterr = 1;
 
 /// @brief Where an error option is placed
 char optopt;
@@ -92,14 +92,14 @@ typedef enum option_type {
     OPTIONAL_ARGUMENT
 } option_t;
 
-/** 
+/**
  * @brief Find what type of option has been provided
  * @param option the option to test
  * @param option_string the option string for the process
- * 
+ *
  * @return what type of option it is REQUIRED_ARGUMENT etc.
  */
-option_t find_option_type(char *option, const char *option_string) {
+option_t find_option_type(char* option, const char* option_string) {
     option_t r_type;
 
     if (option[0] != '-') {
@@ -109,8 +109,8 @@ option_t find_option_type(char *option, const char *option_string) {
 
     for (uint16_t i = 0; i < strlen(option_string); i++) {
         if (option_string[i] == option[1]) {
-            if (i < (strlen(option_string) - 1) && option_string[i+1] == ':') {
-                if (i < (strlen(option_string) - 2) && option_string[i+2] == ':') {
+            if (i < (strlen(option_string) - 1) && option_string[i + 1] == ':') {
+                if (i < (strlen(option_string) - 2) && option_string[i + 2] == ':') {
                     r_type = OPTIONAL_ARGUMENT;
                 } else {
                     r_type = REQURED_ARGUMENT;
@@ -129,7 +129,7 @@ option_t find_option_type(char *option, const char *option_string) {
 
 
 
-int16_t getopt (int argc, char* argv[], const char *optstring) {
+int16_t getopt(int argc, char* argv[], const char* optstring) {
     char* option = argv[optind];
 
     printf("opt: %s\r\n", option);
@@ -160,10 +160,10 @@ int16_t getopt (int argc, char* argv[], const char *optstring) {
         return '?';
 
     } else if (option_type == REQURED_ARGUMENT) {
-        if ((optind != argc) && (argv[optind+1][0] != '-')) { // There is an argument
-            optarg = argv[optind+1];
+        if ((optind != argc) && (argv[optind + 1][0] != '-')) { // There is an argument
+            optarg = argv[optind + 1];
             optind += 2;
-            
+
             return option[1];
         } else {
             optind++;
@@ -173,15 +173,15 @@ int16_t getopt (int argc, char* argv[], const char *optstring) {
         }
 
     } else if (option_type == OPTIONAL_ARGUMENT) {
-        if ((optind != argc) && (argv[optind+1][0] != '-')) { // There is an argument
-            optarg = argv[optind+1];
+        if ((optind != argc) && (argv[optind + 1][0] != '-')) { // There is an argument
+            optarg = argv[optind + 1];
             optind += 2;
         } else {
             optind++;
         }
 
         return option[1];
-        
+
     } else {
         optind++;
         return option[1];

@@ -1,4 +1,4 @@
-/** 
+/**
  * @file IO.c
  * @author Jack Duignan (JackpDuignan@gmail.com)
  * @date 2024-05-04
@@ -17,9 +17,9 @@
 
 const char g_usage[] = ":p:s:rh";
 
-/** 
+/**
  * @brief Print the help text for the IO module
- * 
+ *
  */
 static void print_help(void) {
     printf("IO controller v0.1\r\n");
@@ -43,17 +43,17 @@ static void print_help(void) {
 }
 
 
-/** 
+/**
  * @brief Perform a digital write
  * @param port the port to write to
  * @param pin_num the pin to write to
  * @param state the state to write
- * 
+ *
  * @return 0 if successful
  */
 static uint8_t perform_digital_write(char port, char pin_num, char state) {
-    int8_t pin_int = (int8_t)(pin_num) - 48;
-    int8_t state_int = (int8_t)(state) - 48;
+    int8_t pin_int = (int8_t)(pin_num)-48;
+    int8_t state_int = (int8_t)(state)-48;
 
     if (port != 'B' && port != 'D' && port != 'C') {
         printf("%c is not a valid port.\r\n", port);
@@ -80,40 +80,40 @@ static uint8_t perform_digital_write(char port, char pin_num, char state) {
 }
 
 
-int32_t IO_entry(uint16_t argc, char *argv[]) {
+int32_t IO_entry(uint16_t argc, char* argv[]) {
     int16_t opt;
     bool s_flag = false, r_flag = false, p_flag = false, h_flag = false;
 
     opterr = false;
 
-    char *port;
+    char* port;
     char state;
 
     while ((opt = getopt(argc, argv, g_usage)) != -1) {
         printf("result: %c\r\n", (char)opt);
         switch (opt) {
-            case 'p':
-                p_flag = 1;
-                printf("Arg: %s\r\n", optarg);
-                port = optarg;
-                break;
-            case 's': // Set mode
-                s_flag = 1;
-                printf("Arg: %s\r\n", optarg);
-                state = optarg[0];
-                break;  
-            case 'r':
-                r_flag = 1;
-                break;
-            case 'h':
-                h_flag = 1;
-                break;
-            case ':':
-                printf("%c missing required argument\r\n", optopt);
-            default: // ? or :
-                printf("Usage %s [-p pin] [-s output] [-r] [-h]\r\n", argv[0]);
-                return EXIT_FAILURE;
-                break;
+        case 'p':
+            p_flag = 1;
+            printf("Arg: %s\r\n", optarg);
+            port = optarg;
+            break;
+        case 's': // Set mode
+            s_flag = 1;
+            printf("Arg: %s\r\n", optarg);
+            state = optarg[0];
+            break;
+        case 'r':
+            r_flag = 1;
+            break;
+        case 'h':
+            h_flag = 1;
+            break;
+        case ':':
+            printf("%c missing required argument\r\n", optopt);
+        default: // ? or :
+            printf("Usage %s [-p pin] [-s output] [-r] [-h]\r\n", argv[0]);
+            return EXIT_FAILURE;
+            break;
         }
     }
 
@@ -134,8 +134,8 @@ int32_t IO_entry(uint16_t argc, char *argv[]) {
     }
 
     if (s_flag && p_flag) {
-        if (perform_digital_write(port[0], port[1], state) == 0) {    
-            printf("Set: %s to %d.\r\n", port, (int8_t)state-48);
+        if (perform_digital_write(port[0], port[1], state) == 0) {
+            printf("Set: %s to %d.\r\n", port, (int8_t)state - 48);
         }
     }
 

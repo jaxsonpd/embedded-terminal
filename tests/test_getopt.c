@@ -1,4 +1,4 @@
-/** 
+/**
  * @file test_getopt.c
  * @author Jack Duignan (JackpDuignan@gmail.com)
  * @date 2024-10-18
@@ -17,7 +17,7 @@ DEFINE_FFF_GLOBALS;
 #define FFF_MOCK_IMPL
 
 void setUp(void) {
-    
+
 }
 
 void tearDown(void) {

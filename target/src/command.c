@@ -1,4 +1,4 @@
-/** 
+/**
  * @file command.c
  * @author Jack Duignan (JackpDuignan@gmail.com)
  * @date 2024-03-31
@@ -25,8 +25,8 @@
 #define MAX_SPACES 2 // the maximum number of spaces in a row in a command
 #define ARG_SIZE 10 // the maximum length of an argument in chars
 
-CMDs_t *cmd_init(void) {
-    CMDs_t *p_commands = calloc(1, sizeof(CMDs_t));
+CMDs_t* cmd_init(void) {
+    CMDs_t* p_commands = calloc(1, sizeof(CMDs_t));
 
     // initialise the commands
     CMD_t help = {
@@ -61,8 +61,8 @@ CMDs_t *cmd_init(void) {
 }
 
 
-uint8_t cmd_execute(CMDs_t commands, uint8_t argc, char **argv) {
-    for (uint8_t i=0; i < commands.length; i++) {
+uint8_t cmd_execute(CMDs_t commands, uint8_t argc, char** argv) {
+    for (uint8_t i = 0; i < commands.length; i++) {
 #ifdef DEBUG
         printf("Checking %s\n", commands.list[i].name);
 #endif // DEBUG
@@ -77,26 +77,26 @@ uint8_t cmd_execute(CMDs_t commands, uint8_t argc, char **argv) {
     return 0;
 }
 
-uint16_t cmd_extract(char *s_input, uint8_t UNUSED(argmax), char* argv[]) {
+uint16_t cmd_extract(char* s_input, uint8_t UNUSED(argmax), char* argv[]) {
     bool first_space = true;
     bool new_arg = false;
     uint16_t arg_number = 0;
     uint16_t char_number = 0;
 
 
-    argv[0] = (char *)calloc(ARG_SIZE, sizeof(char));
+    argv[0] = (char*)calloc(ARG_SIZE, sizeof(char));
 
     for (uint16_t i = 0; i < strlen(s_input); i++) {
 
         if (s_input[i] == '\n') { // end of command
-            return arg_number+1;
+            return arg_number + 1;
 
         } else if (s_input[i] == ' ') {
             if (first_space) { // ignore spaces between commands
                 argv[arg_number][char_number] = '\0';
 
                 new_arg = true;
-                
+
                 first_space = false;
             }
         } else {
@@ -105,7 +105,7 @@ uint16_t cmd_extract(char *s_input, uint8_t UNUSED(argmax), char* argv[]) {
                     arg_number++;
                     char_number = 0;
 
-                    argv[arg_number] = (char *)calloc(ARG_SIZE, sizeof(char));
+                    argv[arg_number] = (char*)calloc(ARG_SIZE, sizeof(char));
 
                     new_arg = false;
                 }
@@ -127,11 +127,11 @@ uint16_t cmd_extract(char *s_input, uint8_t UNUSED(argmax), char* argv[]) {
 
 
 
-bool cmd_check_input(char *UNUSED(cmd)) {
+bool cmd_check_input(char* UNUSED(cmd)) {
 
     return 1;
 }
 
-void cmd_print_error(char *p_cmd) {
+void cmd_print_error(char* p_cmd) {
     printf("%s is not a valid cmd please try again \n \n", p_cmd);
 }
