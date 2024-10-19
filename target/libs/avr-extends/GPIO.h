@@ -15,16 +15,19 @@
 
 #include <avr/io.h>
 
-/// Define a pin for use in the GPIO functions should be assigned to a pin_t
-#define PIN(bank, num) (((bank) << 8) | (num))
+typedef uintptr_t pin_t;
 
-typedef uint16_t pin_t;
+#define PIN_NUM_OFFSET 5 ///< Offset of start of port address in pin_t
+
+/// Define a pin for use in the GPIO functions should be assigned to a pin_t
+#define PIN(bank, num) ((((uintptr_t)&(bank)) << PIN_NUM_OFFSET) | (num))
+
 
 /// Extract the pins number
-#define PINNUM(pin) (pin & 255) 
+#define PINNUM(pin) (pin & 32) 
 
 /// Extract the pins bank
-#define PINBANK(pin) (pin >> 8) 
+#define PINBANK(pin) (pin >> PIN_NUM_OFFSET) 
 
 
 /// The different types of GPIO pins
@@ -68,14 +71,6 @@ bool GPIO_toggle_output(uint16_t pin);
  * @return the state of the pin
  */
 bool GPIO_getState(uint16_t pin);
-
-
-
-
-
-
-
-
 
 
 #endif // GPIO_H

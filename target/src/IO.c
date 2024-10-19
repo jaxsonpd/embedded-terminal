@@ -76,14 +76,13 @@ static uint32_t perform_digital_write(char port, char pin_num, char state) {
     
     switch (port) {
         case 'B':
-            pin = PIN((uintptr_t)&PORTB, pin_int);
-            printf("port B, %x\r\n", (uintptr_t)&PORTB);
+            pin = PIN(PORTB, pin_int);
             break;
         case 'C':
-            pin = PIN((uint8_t)PORTC, pin_int);
+            pin = PIN(PORTC, pin_int);
             break;
         case 'D':
-            pin = PIN((uint8_t)PORTD, pin_int);
+            pin = PIN(PORTD, pin_int);
             break;
         default:
             return 0;
