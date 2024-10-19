@@ -132,8 +132,6 @@ option_t find_option_type(char* option, const char* option_string) {
 int16_t getopt(int argc, char* argv[], const char* optstring) {
     char* option = argv[optind];
 
-    printf("opt: %s\r\n", option);
-
     // Check to see if opt should be processed
     if (optind >= argc) {
         optind = 1;
@@ -142,8 +140,6 @@ int16_t getopt(int argc, char* argv[], const char* optstring) {
 
     // Find the option type
     option_t option_type = find_option_type(option, optstring);
-
-    printf("Option Type: %d\r\n", option_type);
 
     if (option_type == NOT_AN_OPTION) {
         optind++;

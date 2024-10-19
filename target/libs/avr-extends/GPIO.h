@@ -24,7 +24,7 @@ typedef uintptr_t pin_t;
 
 
 /// Extract the pins number
-#define PINNUM(pin) (pin & 32) 
+#define PINNUM(pin) (pin & ((1<<PIN_NUM_OFFSET)-1)) 
 
 /// Extract the pins bank
 #define PINBANK(pin) (pin >> PIN_NUM_OFFSET) 

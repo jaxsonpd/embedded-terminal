@@ -52,10 +52,8 @@ static void print_help(void) {
  * @return 0 if successful
  */
 static uint32_t perform_digital_write(char port, char pin_num, char state) {
-    uint8_t pin_int = (uint8_t)(pin_num)-48;
-    uint8_t state_int = (uint8_t)(state)-48;
-    printf("pin num: %d\n\r", pin_int);
-    printf("pin state: %d\n\r", state_int);
+    uint8_t pin_int = (uint8_t)(pin_num)-(uint8_t)'0';
+    uint8_t state_int = (uint8_t)(state)-(uint8_t)'0';
 
     if (port != 'B' && port != 'D' && port != 'C') {
         printf("%c is not a valid port.\r\n", port);
@@ -73,19 +71,19 @@ static uint32_t perform_digital_write(char port, char pin_num, char state) {
     }
 
     pin_t pin;
-    
+
     switch (port) {
-        case 'B':
-            pin = PIN(PORTB, pin_int);
-            break;
-        case 'C':
-            pin = PIN(PORTC, pin_int);
-            break;
-        case 'D':
-            pin = PIN(PORTD, pin_int);
-            break;
-        default:
-            return 0;
+    case 'B':
+        pin = PIN(PORTB, pin_int);
+        break;
+    case 'C':
+        pin = PIN(PORTC, pin_int);
+        break;
+    case 'D':
+        pin = PIN(PORTD, pin_int);
+        break;
+    default:
+        return 0;
     }
 
     GPIO_pin_init(pin, OUTPUT);
@@ -106,16 +104,13 @@ int32_t IO_entry(uint16_t argc, char* argv[]) {
     char state = 0;
 
     while ((opt = getopt(argc, argv, g_usage)) != -1) {
-        printf("result: %c\r\n", (char)opt);
         switch (opt) {
         case 'p':
             p_flag = 1;
-            printf("Arg: %s\r\n", optarg);
             port = optarg;
             break;
         case 's': // Set mode
             s_flag = 1;
-            printf("Arg: %s\r\n", optarg);
             state = optarg[0];
             break;
         case 'r':
@@ -133,8 +128,6 @@ int32_t IO_entry(uint16_t argc, char* argv[]) {
         }
     }
 
-    printf("p: %1d, s: %1d, r: %1d, h: %1d\r\n", p_flag, s_flag, r_flag, h_flag);
-
     if ((p_flag) && (!s_flag && !r_flag)) { // Require the other arguments
         printf("-p requires ether -s or -r\r\n");
         return EXIT_FAILURE;
@@ -151,7 +144,7 @@ int32_t IO_entry(uint16_t argc, char* argv[]) {
 
     if (s_flag && p_flag) {
         if (perform_digital_write(port[0], port[1], state) == 0) {
-            printf("Set: %s to %d.\r\n", port, (int8_t)state - 48);
+            printf("Set: %s to %d.\r\n", port, (uint8_t)state - 48);
         }
     }
 

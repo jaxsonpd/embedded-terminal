@@ -1,4 +1,4 @@
-/** 
+/**
  * @file main.c
  * @author Jack Duignan (JackpDuignan@gmail.com)
  * @date 2024-03-30
@@ -22,19 +22,19 @@
 
 
 #define BAUD_RATE 115200
-#define DEBUG
+// #define DEBUG
 
-CMDs_t *p_commands;
+CMDs_t* p_commands;
 
 
-/** 
+/**
  * @brief Print the welcome screen
- * 
+ *
  */
-void print_welcome (void) {
+void print_welcome(void) {
     printf("**************************\r\n");
 
-    printf("Embedded Terminal v0.1\r\n");    
+    printf("Embedded Terminal v0.1\r\n");
     printf("Created by: Jack Duignan\r\n");
     printf("Max input size: 64 chars, Use help for more info\r\n");
 
@@ -43,12 +43,12 @@ void print_welcome (void) {
 }
 
 
-/** 
+/**
  * @brief Setup for the embedded terminal
- * 
+ *
  * @return 0 if successful 1 otherwise
  */
-bool setup (void) {
+bool setup(void) {
     // initialise communications
     UART_init_stdio(BAUD_RATE);
 
@@ -57,13 +57,13 @@ bool setup (void) {
     p_commands = cmd_init();
 
     return false;
-} 
+}
 
 
-/** 
+/**
  * @brief Free the memory used to store the argument array
  * @param argv the argument array
- * @param argc the number of arguments in the array 
+ * @param argc the number of arguments in the array
  */
 void free_argv(char* argv[], int8_t argc) {
     free(argv[0]);
@@ -73,26 +73,21 @@ void free_argv(char* argv[], int8_t argc) {
     }
 
     free(argv);
-} 
+}
 
 
-int main (void) {
+int main(void) {
     // Setup
     setup();
-    
-    pin_t led = PIN(0x25, 0x05);
-    
-    GPIO_pin_init(led, OUTPUT);
-    GPIO_set_output(led, 0);
 
     while (1) {
         uint16_t c_maxInputSize = 64;
-        char *input = (char *)calloc(c_maxInputSize, sizeof(char));
-        utils_get_line_echo ("AVR:~$", input, c_maxInputSize);
+        char* input = (char*)calloc(c_maxInputSize, sizeof(char));
+        utils_get_line_echo("AVR:~$", input, c_maxInputSize);
 
 
         uint8_t c_argc_max = 64;
-        char** argv = (char **)calloc(c_argc_max, sizeof(char *));
+        char** argv = (char**)calloc(c_argc_max, sizeof(char*));
         uint8_t argc = cmd_extract(input, c_argc_max, argv);
 
 #ifdef DEBUG
@@ -107,8 +102,8 @@ int main (void) {
         if (argc) {
             cmd_execute(*p_commands, argc, argv);
         }
-        
-        free (input);
+
+        free(input);
 
         free_argv(argv, argc);
     }
