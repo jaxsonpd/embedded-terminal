@@ -62,7 +62,7 @@ static uint32_t perform_digital_write(char port, char pin_num, char state) {
         return 1;
     }
 
-    if (pin_int < 0 || pin_int > 10) {
+    if (pin_int > 10) {
         printf("%d is not a valid pin number.\r\n", pin_num);
         return 1;
     }
@@ -73,23 +73,25 @@ static uint32_t perform_digital_write(char port, char pin_num, char state) {
     }
 
     pin_t pin;
-
+    
     switch (port) {
         case 'B':
-            pin = PIN(0x25, pin_int);
-            printf("port B\r\n");
+            pin = PIN((uintptr_t)&PORTB, pin_int);
+            printf("port B, %x\r\n", (uintptr_t)&PORTB);
+            break;
         case 'C':
-            pin = PIN(PORTC, pin_int);
+            pin = PIN((uint8_t)PORTC, pin_int);
+            break;
         case 'D':
-            pin = PIN(PORTD, pin_int);
+            pin = PIN((uint8_t)PORTD, pin_int);
+            break;
         default:
             return 0;
     }
-    pin = PIN(0x25, 0x05);
 
     GPIO_pin_init(pin, OUTPUT);
 
-    GPIO_set_output(pin, 1);
+    GPIO_set_output(pin, state_int);
 
     return 0;
 }
