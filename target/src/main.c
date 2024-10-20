@@ -12,6 +12,7 @@
 #include <stdio.h>
 
 #include <avr/io.h>
+#include <util/delay.h>
 
 #include "avr_extends/UART.h"
 #include "avr_extends/GPIO.h"
@@ -84,7 +85,13 @@ int main(void) {
 
     int x = 0;
     while(true) {
-        int y = wire_write(0x27, 0x01);
+        // int y = wire_write(0x29, 0x12);
+        wire_write_reg(0x29, 0x12, 0x01);
+        uint8_t buf[0];
+        wire_read_reg(0x29, 0x12, buf, 1);
+        printf("ID reg %x\r\n", buf[0]);
+        _delay_ms(1000);
+        
         // printf("result = %u \r\n", y);
     }
 
