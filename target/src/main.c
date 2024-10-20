@@ -84,12 +84,12 @@ int main(void) {
 
     int x = 0;
     while(true) {
-        if (wire_write(0x07, 0x43) == 2) {
-            printf("Address failure\r\n");
-        }
+        int y = wire_write(0x27, 0x01);
+        // printf("result = %u \r\n", y);
     }
 
     return x;
+
     while (1) {
         uint16_t c_maxInputSize = 64;
         char* input = (char*)calloc(c_maxInputSize, sizeof(char));
