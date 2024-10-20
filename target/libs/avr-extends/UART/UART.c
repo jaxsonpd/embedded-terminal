@@ -20,8 +20,6 @@
 static int putc_stdio(char c, FILE *stream);
 static int getc_stdio(FILE *stream);
 
-#define F_CPU 16000000UL
-
 // Stream setup see https://www.nongnu.org/avr-libc/user-manual/group__avr__stdio.html
 // Stdin example to implement https://stackoverflow.com/questions/4023895/how-do-i-read-a-string-entered-by-the-user-in-c
 // static FILE g_stdout = FDEV_SETUP_STREAM(putc_stdio, NULL, _FDEV_SETUP_WRITE);

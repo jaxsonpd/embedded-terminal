@@ -16,6 +16,7 @@
 
 #include "avr_extends/UART.h"
 #include "avr_extends/GPIO.h"
+#include "avr_extends/wire.h"
 
 #include "inc/utils.h"
 #include "inc/command.h"
@@ -80,6 +81,12 @@ int main(void) {
     // Setup
     setup();
 
+    wire_init(100000);
+
+    while(true) {
+        wire_write(0x07, 0x43);
+        _delay_ms(100);
+    }
     while (1) {
         uint16_t c_maxInputSize = 64;
         char* input = (char*)calloc(c_maxInputSize, sizeof(char));
