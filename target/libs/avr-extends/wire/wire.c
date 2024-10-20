@@ -14,7 +14,11 @@
 
 #include "../avr_extends/wire.h"
 
-#define START 1
+#define START_SENT 0x08
+#define STARTR_SENT 0x10
+
+#define ADDRESS_ACK 0x18
+#define DATA_ACK 0x28
 
 int wire_init(uint32_t scl_freq) {
     // Calculate TWI interface speed
@@ -33,9 +37,9 @@ int wire_write(uint8_t addr, uint8_t data) {
     // Wait for start condition to occur and check correct
     while (!(TWCR&(1<<TWINT))); 
 
-    // if ((TWSR & 0xF8)!= START) {
-    //     return 1;
-    // }
+    if (((TWSR & 0xF8)!= START_SENT) && ((TWSR & 0xF8)!= STARTR_SENT)) {
+        return 1;
+    }
 
     // load the address with a write cmd and trigger a send
     TWDR = addr << 1;
@@ -45,9 +49,9 @@ int wire_write(uint8_t addr, uint8_t data) {
     // Wait for addr to send and check acknowledge
     while (!(TWCR&(1<<TWINT))); 
 
-    // if ((TWSR & 0xF8)!= START) {
-    //     return 1;
-    // }
+    if ((TWSR & 0xF8)!= ADDRESS_ACK) {
+        return 2;
+    }
 
     // Load and send data
     TWDR = data;
@@ -56,12 +60,12 @@ int wire_write(uint8_t addr, uint8_t data) {
     // Wait for data to send and check acknowledge
     while (!(TWCR&(1<<TWINT))); 
 
-    // if ((TWSR & 0xF8)!= START) {
-    //     return 1;
-    // }
+    if ((TWSR & 0xF8)!= DATA_ACK) {
+        return 3;
+    }
 
     // Send stop
-    TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWSTO);
+    TWCR = (1<<TWINT)|(1<<TWSTO);
 
     return 0;
 }

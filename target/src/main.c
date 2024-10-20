@@ -12,7 +12,6 @@
 #include <stdio.h>
 
 #include <avr/io.h>
-#include <util/delay.h>
 
 #include "avr_extends/UART.h"
 #include "avr_extends/GPIO.h"
@@ -83,10 +82,14 @@ int main(void) {
 
     wire_init(100000);
 
+    int x = 0;
     while(true) {
-        wire_write(0x07, 0x43);
-        _delay_ms(100);
+        if (wire_write(0x07, 0x43) == 2) {
+            printf("Address failure\r\n");
+        }
     }
+
+    return x;
     while (1) {
         uint16_t c_maxInputSize = 64;
         char* input = (char*)calloc(c_maxInputSize, sizeof(char));
