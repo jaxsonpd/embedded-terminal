@@ -36,10 +36,17 @@ static int send_start(void) {
     // Wait for start condition to occur and check correct
     while (!(TWCR & (1 << TWINT)));
 
-    if (((TWSR & 0xF8)!= START_SENT) && ((TWSR & 0xF8)!= STARTR_SENT)) {
-        return 1;
-    }
+    // if (((TWSR & 0xF8)!= START_SENT) && ((TWSR & 0xF8)!= STARTR_SENT)) {
+    //     return 1;
+    // }
     return 0;
+}
+
+static int send_restart(void) {
+    TWCR = (1 << TWINT) | (1 << TWSTA) | (1 << TWSTO) | (1 << TWEN);
+    
+    while (!(TWCR & (1 << TWINT)));
+
 }
 
 static int send_address(uint8_t addr, bool read) {
@@ -71,7 +78,12 @@ static int send_byte(uint8_t data) {
 }
 
 static int read_byte(uint8_t *data) {
-    while (!(TWCR & (1 << TWINT)));
+    uint64_t x = 0;
+
+    while (!(TWCR & (1 << TWINT)) && x > 1000) {
+        x++;
+        asm ("");
+    }
 
     *data = TWDR;
 
@@ -144,11 +156,18 @@ int wire_read_reg(uint8_t addr, uint8_t reg, uint8_t buf[], uint8_t len) {
     if (result != 0) return result;
 
     // load the address with a write cmd and trigger a send
-    result = send_address(addr, true);
+    result = send_address(addr, false);
     if (result != 0) return result;
 
-    // result = send_byte(reg);
-    // if (result != 0) return result;
+    result = send_byte(reg);
+    if (result != 0) return result;
+
+    // result = send_stop();
+    // result = send_start();
+    send_restart();
+
+    result = send_address(addr, true);
+
     
     for (size_t i = 0; i < len; i++)
     {
