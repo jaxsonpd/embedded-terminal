@@ -79,7 +79,7 @@ static int send_byte(uint8_t data) {
 
 static int read_byte(uint8_t *data) {
     uint64_t x = 0;
-
+    TWCR = (1 << TWINT) | (1 << TWEA);
     while (!(TWCR & (1 << TWINT)) && x > 1000) {
         x++;
         asm ("");
@@ -163,8 +163,8 @@ int wire_read_reg(uint8_t addr, uint8_t reg, uint8_t buf[], uint8_t len) {
     if (result != 0) return result;
 
     // result = send_stop();
-    // result = send_start();
-    send_restart();
+    result = send_start();
+    // send_restart();
 
     result = send_address(addr, true);
 
