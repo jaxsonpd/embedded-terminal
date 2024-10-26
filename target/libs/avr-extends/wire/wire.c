@@ -80,7 +80,7 @@ static int send_byte(uint8_t data) {
 static int read_byte(uint8_t *data) {
     uint64_t x = 0;
     TWCR = (1 << TWINT) | (1 << TWEA);
-    while (!(TWCR & (1 << TWINT)) && x > 1000) {
+    while (!(TWCR & (1 << TWINT)) && x < 1000) {
         x++;
         asm ("");
     }
